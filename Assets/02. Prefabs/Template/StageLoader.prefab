@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3248306682658884640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8219234294251934248}
+  - component: {fileID: 2156903412688214952}
+  - component: {fileID: 1607126935284265117}
+  m_Layer: 0
+  m_Name: StageLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8219234294251934248
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3248306682658884640}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2156903412688214952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3248306682658884640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c13be755335af684ab485792fa213b03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageLoader
+  mapPiecePrefab: {fileID: 474948940783557716, guid: 3b5976d46efafec4a90875988bdaecc7, type: 3}
+  platformPrefab: {fileID: 6432032709259531225, guid: 57a68ac7af8c6df4f9678e61a9a30706, type: 3}
+  movingPlatformPrefab: {fileID: 6432032709259531225, guid: 51a6a324a6e19894bbd4d86c2c5782e0, type: 3}
+  doubleJumpItemPrefab: {fileID: 5209157951207354616, guid: cc3b5e19d19e4654f8283843ab61ada9, type: 3}
+  blockerPrefab: {fileID: 6432032709259531225, guid: 213256190af55d84ebd0b47dc807cda2, type: 3}
+  hazardPrefab: {fileID: 6432032709259531225, guid: 94b0d6791799ee14e944eb41260d6928, type: 3}
+  movingHazardPrefab: {fileID: 6432032709259531225, guid: a3db0f1ae18dadd47ab3d2841c3feaff, type: 3}
+  laserEmitterPrefab: {fileID: 6432032709259531225, guid: e80825eb7862c9043a11d07eb96afd92, type: 3}
+  maskingPrefab: {fileID: 6432032709259531225, guid: b3a0563f1d11cb247b967cc920e91faa, type: 3}
+  spawnPrefab: {fileID: 6432032709259531225, guid: 53150eecc80cbc84a8b906a89598defd, type: 3}
+  goalPrefab: {fileID: 1390008376439997796, guid: 3d400dcd459883a4882f4959278e0113, type: 3}
+  textObjectPrefab: {fileID: 1873303656232628699, guid: dd2cd91c638b9304f8720a10b73fd115, type: 3}
+  player: {fileID: 0}
+  mainCamera: {fileID: 0}
+  stageFileName: 
+--- !u!114 &1607126935284265117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3248306682658884640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bda0898b7a150c4498ef3523eae94b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameSceneLoader
+  key: 1
+  fallbackStageFile: fallback.json

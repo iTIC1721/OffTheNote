@@ -1,0 +1,162 @@
+{
+    "stageName": "Hazard Tutorial",
+    "cameraHeight": 16.0,
+    "spawnPieceId": "piece_0",
+    "spawnLocalPosition": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "goalPieceId": "piece_1",
+    "goalLocalPosition": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "mapPieces": [
+        {
+            "id": "piece_0",
+            "position": {
+                "x": -6.5,
+                "y": 0.0
+            },
+            "colliderSize": {
+                "x": 5.0,
+                "y": 5.0
+            },
+            "isMovable": true,
+            "isVisible": true,
+            "pieceObjects": [
+                {
+                    "id": "Platform_0",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 0.0,
+                        "y": -2.0
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 5.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    }
+                }
+            ]
+        },
+        {
+            "id": "piece_1",
+            "position": {
+                "x": 6.5,
+                "y": 0.0
+            },
+            "colliderSize": {
+                "x": 5.0,
+                "y": 5.0
+            },
+            "isMovable": false,
+            "isVisible": true,
+            "pieceObjects": []
+        },
+        {
+            "id": "piece_2",
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "colliderSize": {
+                "x": 5.0,
+                "y": 5.0
+            },
+            "isMovable": true,
+            "isVisible": true,
+            "pieceObjects": [
+                {
+                    "id": "Platform_0",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 0.0,
+                        "y": -2.0
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    }
+                }
+            ]
+        }
+    ],
+    "globalObjects": [
+        {
+            "id": "Hazard_0",
+            "type": 1,
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "text": {
+                "content": "Text",
+                "fontSize": 1.0
+            },
+            "hazard": {
+                "size": {
+                    "x": 3.0,
+                    "y": 16.0
+                }
+            }
+        },
+        {
+            "id": "Text_1",
+            "type": 0,
+            "position": {
+                "x": 8.0,
+                "y": 5.0
+            },
+            "text": {
+                "content": "R키를 눌러 다시 시작할 수 있습니다.",
+                "fontSize": 10.0
+            },
+            "hazard": {
+                "size": {
+                    "x": 3.0,
+                    "y": 0.5
+                }
+            }
+        }
+    ]
+}

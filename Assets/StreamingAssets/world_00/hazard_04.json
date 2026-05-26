@@ -1,0 +1,1109 @@
+{
+    "stageName": "Hazard Tutorial",
+    "cameraHeight": 25.0,
+    "spawnPieceId": "piece_0",
+    "spawnLocalPosition": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "goalPieceId": "piece_6",
+    "goalLocalPosition": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "mapPieces": [
+        {
+            "id": "piece_0",
+            "position": {
+                "x": -16.5,
+                "y": -6.5
+            },
+            "colliderSize": {
+                "x": 7.0,
+                "y": 7.0
+            },
+            "isMovable": true,
+            "isVisible": true,
+            "pieceObjects": [
+                {
+                    "id": "Platform_0",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 0.0,
+                        "y": -3.0
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 7.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_1",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 0.0,
+                        "y": 3.0
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 7.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_2",
+                    "type": 0,
+                    "localPosition": {
+                        "x": -3.0,
+                        "y": 0.0
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 1.0,
+                            "y": 5.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "piece_2",
+            "position": {
+                "x": -7.5,
+                "y": 0.0
+            },
+            "colliderSize": {
+                "x": 5.0,
+                "y": 20.0
+            },
+            "isMovable": true,
+            "isVisible": true,
+            "pieceObjects": [
+                {
+                    "id": "Platform_0",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 0.0,
+                        "y": -6.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 5.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_3",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 0.0,
+                        "y": 9.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 5.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_4",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 0.0,
+                        "y": 3.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 5.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "piece_3",
+            "position": {
+                "x": -7.5,
+                "y": 0.0
+            },
+            "colliderSize": {
+                "x": 7.0,
+                "y": 25.0
+            },
+            "isMovable": false,
+            "isVisible": false,
+            "pieceObjects": [
+                {
+                    "id": "Platform_0",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 2.0,
+                        "y": -11.0
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 1.0,
+                            "y": 4.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_1",
+                    "type": 0,
+                    "localPosition": {
+                        "x": -2.0,
+                        "y": 11.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 1.0,
+                            "y": 3.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_2",
+                    "type": 0,
+                    "localPosition": {
+                        "x": -3.0,
+                        "y": 8.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 1.0,
+                            "y": 9.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_3",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 3.0,
+                        "y": -12.0
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 1.0,
+                            "y": 10.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_4",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 3.0,
+                        "y": -3.0
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 1.0,
+                            "y": 4.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_5",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 3.0,
+                        "y": 7.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 1.0,
+                            "y": 13.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "piece_4",
+            "position": {
+                "x": 7.5,
+                "y": 0.0
+            },
+            "colliderSize": {
+                "x": 5.0,
+                "y": 20.0
+            },
+            "isMovable": true,
+            "isVisible": true,
+            "pieceObjects": [
+                {
+                    "id": "Platform_0",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 0.0,
+                        "y": -5.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 5.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_1",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 0.0,
+                        "y": 9.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 5.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_2",
+                    "type": 0,
+                    "localPosition": {
+                        "x": -1.0,
+                        "y": -0.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 1.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_3",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 1.0,
+                        "y": 3.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 1.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "piece_5",
+            "position": {
+                "x": 11.5,
+                "y": 0.0
+            },
+            "colliderSize": {
+                "x": 15.0,
+                "y": 25.0
+            },
+            "isMovable": false,
+            "isVisible": false,
+            "pieceObjects": [
+                {
+                    "id": "Platform_0",
+                    "type": 0,
+                    "localPosition": {
+                        "x": -2.0,
+                        "y": -9.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 1.0,
+                            "y": 7.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_1",
+                    "type": 0,
+                    "localPosition": {
+                        "x": -7.0,
+                        "y": 12.0
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 1.0,
+                            "y": 6.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_2",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 0.5,
+                        "y": 12.0
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 14.0,
+                            "y": 4.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_3",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 6.0,
+                        "y": -2.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_4",
+                    "type": 0,
+                    "localPosition": {
+                        "x": -6.0,
+                        "y": 1.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_5",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 6.0,
+                        "y": 5.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_6",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 7.0,
+                        "y": -8.0
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 1.0,
+                            "y": 10.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                },
+                {
+                    "id": "Platform_7",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 3.0,
+                        "y": -9.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 1.0,
+                            "y": 7.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "piece_6",
+            "position": {
+                "x": 17.5,
+                "y": 7.5
+            },
+            "colliderSize": {
+                "x": 5.0,
+                "y": 5.0
+            },
+            "isMovable": false,
+            "isVisible": true,
+            "pieceObjects": []
+        }
+    ],
+    "globalObjects": [
+        {
+            "id": "Hazard_0",
+            "type": 1,
+            "position": {
+                "x": -5.5,
+                "y": 2.5
+            },
+            "text": {
+                "content": "Text",
+                "fontSize": 1.0
+            },
+            "hazard": {
+                "size": {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            }
+        },
+        {
+            "id": "Hazard_1",
+            "type": 1,
+            "position": {
+                "x": 14.5,
+                "y": -6.5
+            },
+            "text": {
+                "content": "Text",
+                "fontSize": 1.0
+            },
+            "hazard": {
+                "size": {
+                    "x": 1.5,
+                    "y": 1.5
+                }
+            }
+        },
+        {
+            "id": "Hazard_2",
+            "type": 1,
+            "position": {
+                "x": 9.5,
+                "y": -4.5
+            },
+            "text": {
+                "content": "Text",
+                "fontSize": 1.0
+            },
+            "hazard": {
+                "size": {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            }
+        },
+        {
+            "id": "Hazard_3",
+            "type": 1,
+            "position": {
+                "x": 4.5,
+                "y": 5.5
+            },
+            "text": {
+                "content": "Text",
+                "fontSize": 1.0
+            },
+            "hazard": {
+                "size": {
+                    "x": 1.0,
+                    "y": 7.0
+                }
+            }
+        },
+        {
+            "id": "Hazard_4",
+            "type": 1,
+            "position": {
+                "x": 18.5,
+                "y": 1.5
+            },
+            "text": {
+                "content": "Text",
+                "fontSize": 1.0
+            },
+            "hazard": {
+                "size": {
+                    "x": 1.0,
+                    "y": 7.0
+                }
+            }
+        }
+    ]
+}

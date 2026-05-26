@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - MapPiece
+  - SpawnPoint
+  - Goal
+  - Item
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Platform
+  - Player
+  - MapPiece
+  - Hazard
+  - Blocker
+  - Masking
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background
+    uniqueID: 2768492769
+    locked: 0
+  - name: Text
+    uniqueID: 3307715523
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Platform
+    uniqueID: 2477196517
+    locked: 0
+  - name: Object
+    uniqueID: 2848134737
+    locked: 0
+  - name: Player
+    uniqueID: 4012708943
+    locked: 0
+  m_RenderingLayers:
+  - Default
