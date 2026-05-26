@@ -1,5 +1,5 @@
 {
-    "stageName": "Mask Tutorial",
+    "stageName": "Pin Tutorial",
     "cameraHeight": 15.0,
     "spawnPieceId": "piece_0",
     "spawnLocalPosition": {
@@ -75,12 +75,6 @@
                     },
                     "laserEmitter": {
                         "direction": 0
-                    },
-                    "masking": {
-                        "size": {
-                            "x": 2.0,
-                            "y": 2.0
-                        }
                     }
                 }
             ]
@@ -167,12 +161,6 @@
                     },
                     "laserEmitter": {
                         "direction": 0
-                    },
-                    "masking": {
-                        "size": {
-                            "x": 2.0,
-                            "y": 2.0
-                        }
                     }
                 }
             ]
@@ -181,14 +169,14 @@
             "id": "piece_3",
             "position": {
                 "x": 0.0,
-                "y": -2.0
+                "y": 3.5
             },
             "colliderSize": {
-                "x": 3.0,
-                "y": 3.0
+                "x": 5.0,
+                "y": 5.0
             },
-            "isMovable": true,
-            "isVisible": true,
+            "isMovable": false,
+            "isVisible": false,
             "isPinned": false,
             "pinLocalPosition": {
                 "x": 0.0,
@@ -196,16 +184,16 @@
             },
             "pieceObjects": [
                 {
-                    "id": "Masking_0",
-                    "type": 7,
+                    "id": "Platform_0",
+                    "type": 0,
                     "localPosition": {
                         "x": 0.0,
                         "y": 0.0
                     },
                     "platform": {
                         "size": {
-                            "x": 3.0,
-                            "y": 0.5
+                            "x": 1.0,
+                            "y": 5.0
                         }
                     },
                     "movingPlatform": {
@@ -240,12 +228,6 @@
                     },
                     "laserEmitter": {
                         "direction": 0
-                    },
-                    "masking": {
-                        "size": {
-                            "x": 3.0,
-                            "y": 8.0
-                        }
                     }
                 }
             ]
