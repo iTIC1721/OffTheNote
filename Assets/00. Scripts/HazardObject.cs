@@ -19,6 +19,7 @@ public class HazardObject : MonoBehaviour
 
     void Update()
     {
+        if (PauseManager.Instance != null && PauseManager.Instance.IsPaused) return;
         if (player == null || playerCol == null) return;
 
         // lossyScale 반영한 실제 월드 크기에서 margin만큼 축소

@@ -111,9 +111,9 @@ public class MapPieceSelector : MonoBehaviour
         draggingPiece = null;
     }
 
-    public void EnableDragging()
+    public void EnableDragging(bool enable)
     {
-        isDragEnabled = true;
+        isDragEnabled = enable;
     }
 
     public void StartRespawnFreeze()
@@ -129,9 +129,12 @@ public class MapPieceSelector : MonoBehaviour
         draggingPiece?.StopDrag();
         draggingPiece = null;
 
-        yield return new WaitForSeconds(respawnFreezeDuration);
+        yield return new WaitForSecondsRealtime(respawnFreezeDuration);
 
-        isDragEnabled = true;
+        // 일시정지 중이 아닐 때만 복구
+        if (PauseManager.Instance == null || !PauseManager.Instance.IsPaused)
+            isDragEnabled = true;
+
         freezeCoroutine = null;
     }
 }

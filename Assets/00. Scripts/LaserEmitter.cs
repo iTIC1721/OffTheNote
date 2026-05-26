@@ -83,6 +83,8 @@ public class LaserEmitter : MonoBehaviour
 
     void Update()
     {
+        if (PauseManager.Instance != null && PauseManager.Instance.IsPaused) return;
+
         UpdateLaserLength();
         BuildLaserMesh();
         CheckHazard();

@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (PauseManager.Instance != null && PauseManager.Instance.IsPaused) return;
+
         HandleJump();
     }
 
