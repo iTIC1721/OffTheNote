@@ -14,9 +14,7 @@ public class WorldSelectManager : MonoBehaviour
 {
     public static WorldSelectManager Instance { get; private set; }
 
-    [Header("Data")]
-    [SerializeField] private WorldListData worldList;
-    public WorldListData WorldList => worldList;
+    public WorldListData WorldList => ProgressManager.Instance?.WorldList;
 
     [Header("Scene")]
     [SerializeField] private string gameSceneName = "GameScene";
@@ -91,10 +89,23 @@ public class WorldSelectManager : MonoBehaviour
     {
         if (ProgressManager.Instance == null) return;
 
-        int targetIndex = ProgressManager.Instance.ConsumeNextWorldFocus();
-        if (targetIndex < 0 || targetIndex >= worldList.worlds.Count) return;
+        int targetIndex = ProgressManager.Instance.ConsumeNextWorldFocus(out bool wasLocked);
+        Debug.Log($"[WSM] ApplyPendingWorldFocus: targetIndex={targetIndex}, wasLocked={wasLocked}, WorldList={(WorldList == null ? "NULL" : "OK")}");
+        if (targetIndex < 0 || targetIndex >= WorldList.worlds.Count) return;
 
-        JumpToWorld(targetIndex);
+        if (wasLocked)
+        {
+            // 이번 클리어로 처음 해금된 월드 → 잠금 상태로 미리 세팅 후 해금 연출
+            JumpToWorld(targetIndex, onComplete: () => {
+                Debug.Log("[WSM] JumpToWorld 완료 → PlayUnlockEffect 호출");
+                mainCard.PlayUnlockEffect(delay: 0.2f);
+            }, forceMainCardLocked: true);
+        }
+        else
+        {
+            // 이미 열려있던 월드 → 연출 없이 포커싱만
+            JumpToWorld(targetIndex);
+        }
     }
 
     void SelectWorld(WorldData world)
@@ -114,7 +125,7 @@ public class WorldSelectManager : MonoBehaviour
     // ── 월드 버튼 ─────────────────────────────────────────────
     void OpenCurrentWorld()
     {
-        var world = worldList.worlds[currentWorldIndex];
+        var world = WorldList.worlds[currentWorldIndex];
         if (GetUnlocked(world) == 0) return;
         SelectWorld(world);
     }
@@ -129,26 +140,46 @@ public class WorldSelectManager : MonoBehaviour
 
     void NextWorld()
     {
-        if (isWorldAnimating || currentWorldIndex >= worldList.worlds.Count - 1) return;
+        if (isWorldAnimating || currentWorldIndex >= WorldList.worlds.Count - 1) return;
         currentWorldIndex++;
         RefreshCards();
         StartCoroutine(AnimateTransition(Direction.Right));
     }
 
-    void JumpToWorld(int idx)
+    void JumpToWorld(int idx, System.Action onComplete = null, bool forceMainCardLocked = false)
     {
-        if (isWorldAnimating || idx == currentWorldIndex) return;
+        Debug.Log($"[WSM] JumpToWorld: idx={idx}, currentWorldIndex={currentWorldIndex}, isWorldAnimating={isWorldAnimating}");
+        if (isWorldAnimating || idx == currentWorldIndex)
+        {
+            Debug.Log($"[WSM] JumpToWorld 조기 반환 — isWorldAnimating={isWorldAnimating}, sameIndex={idx == currentWorldIndex}");
+            onComplete?.Invoke();
+            return;
+        }
         Direction dir = idx > currentWorldIndex ? Direction.Right : Direction.Left;
         currentWorldIndex = idx;
+        Debug.Log($"[WSM] RefreshCards 호출 전, WorldList={(WorldList == null ? "NULL" : "OK")}");
+
+        // forceMainCardLocked: 메인 카드를 먼저 잠금 상태로 세팅한 뒤
+        // RefreshCards로 나머지(도트, 화살표, peek 카드 등)만 갱신
+        if (forceMainCardLocked)
+            mainCard.Setup(WorldList.worlds[idx], forceShowLock: true);
+
         RefreshCards();
-        StartCoroutine(AnimateTransition(dir));
+
+        // RefreshCards가 메인 카드를 덮어쓰므로 잠금 상태 재적용
+        if (forceMainCardLocked)
+            mainCard.Setup(WorldList.worlds[idx], forceShowLock: true);
+
+        Debug.Log("[WSM] StartCoroutine(AnimateTransition) 호출");
+        StartCoroutine(AnimateTransition(dir, onComplete));
     }
 
     enum Direction { Left, Right }
 
-    IEnumerator AnimateTransition(Direction dir)
+    IEnumerator AnimateTransition(Direction dir, System.Action onComplete = null)
     {
         isWorldAnimating = true;
+        Debug.Log($"[WSM] AnimateTransition 시작: dir={dir}");
 
         float duration = 0.25f;
         float elapsed = 0f;
@@ -198,6 +229,8 @@ public class WorldSelectManager : MonoBehaviour
         LayoutDots(currentWorldIndex);
 
         isWorldAnimating = false;
+        Debug.Log("[WSM] AnimateTransition 완료 → onComplete 호출");
+        onComplete?.Invoke();
     }
 
     int GetUnlocked(WorldData world) => ProgressManager.Instance != null
@@ -206,7 +239,7 @@ public class WorldSelectManager : MonoBehaviour
 
     void RefreshCards()
     {
-        var worlds = worldList.worlds;
+        var worlds = WorldList.worlds;
 
         // 메인 카드
         mainCard.Setup(worlds[currentWorldIndex]);
@@ -242,7 +275,7 @@ public class WorldSelectManager : MonoBehaviour
         dotRects.Clear();
         dotImages.Clear();
 
-        for (int i = 0; i < worldList.worlds.Count; i++)
+        for (int i = 0; i < WorldList.worlds.Count; i++)
         {
             var dot = new GameObject($"Dot_{i}");
             dot.transform.SetParent(dotsContainer, false);
@@ -306,12 +339,12 @@ public class WorldSelectManager : MonoBehaviour
 
     void RefreshTotalProgress()
     {
-        if (totalProgress == null || worldList == null) return;
+        if (totalProgress == null || WorldList == null) return;
 
         int totalStages = 0;
         int totalCleared = 0;
 
-        foreach (var world in worldList.worlds)
+        foreach (var world in WorldList.worlds)
         {
             totalStages += world.stageFiles.Count;
             int unlocked = ProgressManager.Instance != null
