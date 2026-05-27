@@ -163,57 +163,6 @@ public class PlayerController : MonoBehaviour
         ResolveOverlap();
     }
 
-    void ResolveOverlap()
-    {
-        Collider2D[] overlaps = Physics2D.OverlapBoxAll(
-            transform.position,
-            col.size,
-            0f,
-            groundLayer
-        );
-
-        foreach (var overlap in overlaps)
-        {
-            ColliderDistance2D dist = Physics2D.Distance(col, overlap);
-            if (dist.isOverlapped)
-            {
-                Vector2 correction = dist.normal * dist.distance;
-                correction.x = 0;
-                transform.position += (Vector3)correction;
-
-                if (dist.normal.y > 0.9f && velocity.y < 0)
-                    velocity.y = 0;
-            }
-        }
-    }
-
-    // 이동량을 받아 콜라이더 충돌을 고려한 실제 이동량을 반환
-    Vector2 ResolveCollision(Vector2 moveAmount)
-    {
-        if (moveAmount == Vector2.zero) return Vector2.zero;
-
-        float distance = moveAmount.magnitude;
-        Vector2 direction = moveAmount.normalized;
-
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(
-            transform.position,
-            col.size,
-            0f,
-            direction,
-            distance + 0.001f,
-            groundLayer
-        );
-
-        float allowedDistance = distance;
-        foreach (var hit in hits)
-        {
-            float d = Mathf.Max(0, hit.distance - 0.001f);
-            allowedDistance = Mathf.Min(allowedDistance, d);
-        }
-
-        return direction * allowedDistance;
-    }
-
     void Jump()
     {
         if (jumpQueued)
@@ -244,6 +193,59 @@ public class PlayerController : MonoBehaviour
             transform.position += (Vector3)resolvedV;
 
             ResolveOverlap();
+        }
+    }
+
+    // 이동량을 받아 콜라이더 충돌을 고려한 실제 이동량을 반환
+    Vector2 ResolveCollision(Vector2 moveAmount)
+    {
+        if (moveAmount == Vector2.zero) return Vector2.zero;
+
+        float distance = moveAmount.magnitude;
+        Vector2 direction = moveAmount.normalized;
+
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(
+            transform.position,
+            col.size,
+            0f,
+            direction,
+            distance + 0.001f,
+            groundLayer
+        );
+
+        float allowedDistance = distance;
+        foreach (var hit in hits)
+        {
+            if (Vector2.Dot(hit.normal, direction) > -0.5f) continue;
+
+            float d = Mathf.Max(0, hit.distance - 0.001f);
+            allowedDistance = Mathf.Min(allowedDistance, d);
+        }
+
+        return direction * allowedDistance;
+    }
+
+    void ResolveOverlap()
+    {
+        Collider2D[] overlaps = Physics2D.OverlapBoxAll(
+            transform.position,
+            col.size,
+            0f,
+            groundLayer
+        );
+
+        foreach (var overlap in overlaps)
+        {
+            ColliderDistance2D dist = Physics2D.Distance(col, overlap);
+            if (dist.isOverlapped)
+            {
+                Vector2 correction = dist.normal * dist.distance;
+                correction.x = 0;
+                transform.position += (Vector3)correction;
+
+                if (dist.normal.y > 0.9f && velocity.y < 0)
+                    velocity.y = 0;
+            }
         }
     }
 

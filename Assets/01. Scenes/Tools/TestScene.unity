@@ -521,7 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2c1c092b88e8f4c9b413f029df54a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapPieceSelector
-  respawnFreezeDuration: 1.5
+  respawnFreezeDuration: 0.1
 --- !u!114 &1653081807 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5852705522561404755, guid: 191e6dd8f14f4a24ba7540bb21564d5b, type: 3}
