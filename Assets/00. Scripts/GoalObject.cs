@@ -13,6 +13,10 @@ public class GoalObject : MonoBehaviour
     [SerializeField] private float suckScale = 0.05f;  // 최종 크기 배율
     [SerializeField] private float waitAfter = 0.3f;   // 연출 후 씬 전환 대기
 
+    [Header("Fade")]
+    [SerializeField] private float fadeOutDuration = 0.4f;
+    [SerializeField] private float fadeInDuration = 0.5f;
+
     [Header("Scene")]
     [SerializeField] private string selectSceneName = "StageSelectScene";
 
@@ -72,9 +76,15 @@ public class GoalObject : MonoBehaviour
             ? ProgressManager.Instance.ClearCurrentStage()
             : false;
 
-        if (hasNext)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // 게임 씬 재로드
-        else
-            SceneManager.LoadScene(selectSceneName); // 스테이지 선택으로
+        string targetScene = hasNext
+            ? SceneManager.GetActiveScene().name
+            : selectSceneName;
+
+        // 페이드 아웃 → 씬 전환 → 페이드 인
+        FadeManager.Instance.FadeAndLoadScene(
+            sceneName: targetScene,
+            fadeOutDuration: fadeOutDuration,
+            fadeInDuration: fadeInDuration
+        );
     }
 }
