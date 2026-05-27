@@ -99,7 +99,7 @@ public class StageLoader : MonoBehaviour
                 spawnObj.transform.position = data.spawnLocalPosition.ToVector2();
             }
             player.SetSpawnPoint(spawnObj.transform);
-            player.Respawn();
+            player.Respawn(enableDeathEffect: false);
         }
 
         // ── 골 지점 ───────────────────────────────────────────

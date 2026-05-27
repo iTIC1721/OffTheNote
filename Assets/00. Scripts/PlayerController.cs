@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float coyoteTime = 0.1f;
     private float coyoteTimer = 0f;
 
+    [Header("Death Effect")]
+    [SerializeField] private ExplodeEffect deathEffect;
+
     private bool isControllable = true;
 
     public BoxCollider2D Col => col;
@@ -296,8 +299,13 @@ public class PlayerController : MonoBehaviour
         spawnPointTransform = t;
     }
 
-    public void Respawn()
+    public void Respawn(bool enableDeathEffect = true)
     {
+        // 사망 위치에서 이펙트 재생
+        if (deathEffect != null && enableDeathEffect)
+            deathEffect.Play(ClampToViewport(transform.position));
+
+        // 스폰 위치 지정
         Vector2 pos = spawnPointTransform != null
             ? (Vector2)spawnPointTransform.position
             : spawnPosition;
@@ -324,5 +332,21 @@ public class PlayerController : MonoBehaviour
         {
             enabled = true;
         }
+    }
+
+    // 헬퍼
+
+    // 플레이어 위치를 카메라 경계 안쪽으로 클램프해서 반환
+    Vector2 ClampToViewport(Vector2 worldPos)
+    {
+        Camera cam = Camera.main;
+        float h = cam.orthographicSize;
+        float w = h * cam.aspect;
+        Vector2 c = cam.transform.position;
+
+        return new Vector2(
+            Mathf.Clamp(worldPos.x, c.x - w, c.x + w),
+            Mathf.Clamp(worldPos.y, c.y - h, c.y + h)
+        );
     }
 }
