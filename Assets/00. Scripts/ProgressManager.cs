@@ -11,6 +11,10 @@ public class ProgressManager : MonoBehaviour
     public WorldData CurrentWorld { get; private set; }
     public int CurrentStageIndex { get; private set; }
 
+    // 씬 전환 후 WorldSelectManager가 소비할 포커싱 인덱스
+    // -1 이면 요청 없음
+    private int _pendingWorldFocusIndex = -1;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -56,7 +60,33 @@ public class ProgressManager : MonoBehaviour
             CurrentStageIndex = nextIndex;
             return true;
         }
+
+        // 월드 마지막 스테이지 클리어
+        // 다음 월드가 존재하면 포커싱 요청 예약
+        WorldListData worldList = WorldSelectManager.Instance?.WorldList;
+        if (worldList != null)
+        {
+            int currentWorldIndex = worldList.worlds.FindIndex(
+                w => w.worldId == CurrentWorld.worldId);
+
+            int nextWorldIndex = currentWorldIndex + 1;
+            if (nextWorldIndex < worldList.worlds.Count)
+                _pendingWorldFocusIndex = nextWorldIndex;
+        }
+
         return false;
+    }
+
+    /// <summary>
+    /// WorldSelectManager가 Start()에서 호출.
+    /// 예약된 포커싱 인덱스를 반환하고 즉시 초기화합니다(1회 소비).
+    /// 예약이 없으면 -1 반환.
+    /// </summary>
+    public int ConsumeNextWorldFocus()
+    {
+        int index = _pendingWorldFocusIndex;
+        _pendingWorldFocusIndex = -1;
+        return index;
     }
 
     public int GetUnlockedCount(string worldId)

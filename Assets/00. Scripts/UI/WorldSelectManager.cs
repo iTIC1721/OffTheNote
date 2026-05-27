@@ -79,6 +79,22 @@ public class WorldSelectManager : MonoBehaviour
 
         BuildDots();
         RefreshCards();
+
+        ApplyPendingWorldFocus();
+    }
+
+    /// <summary>
+    /// 월드 마지막 스테이지 클리어 후 돌아왔을 때 다음 월드로 자동 포커싱.
+    /// ProgressManager에 예약된 인덱스가 있으면 JumpToWorld로 이동합니다.
+    /// </summary>
+    void ApplyPendingWorldFocus()
+    {
+        if (ProgressManager.Instance == null) return;
+
+        int targetIndex = ProgressManager.Instance.ConsumeNextWorldFocus();
+        if (targetIndex < 0 || targetIndex >= worldList.worlds.Count) return;
+
+        JumpToWorld(targetIndex);
     }
 
     void SelectWorld(WorldData world)
@@ -122,9 +138,10 @@ public class WorldSelectManager : MonoBehaviour
     void JumpToWorld(int idx)
     {
         if (isWorldAnimating || idx == currentWorldIndex) return;
+        Direction dir = idx > currentWorldIndex ? Direction.Right : Direction.Left;
         currentWorldIndex = idx;
         RefreshCards();
-        StartCoroutine(AnimateTransition(idx > currentWorldIndex ? Direction.Right : Direction.Left));
+        StartCoroutine(AnimateTransition(dir));
     }
 
     enum Direction { Left, Right }
