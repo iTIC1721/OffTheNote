@@ -54,8 +54,9 @@ public class PauseManager : MonoBehaviour
 
     public void GoToStageSelect()
     {
+        ProgressManager.Instance?.RequestWorldFocus();
         IsPaused = false;
         Time.timeScale = 1f;
-        SceneManager.LoadScene("StageSelectScene"); // 씬 이름 맞게 수정
+        SceneManager.LoadScene("StageSelect");
     }
 }

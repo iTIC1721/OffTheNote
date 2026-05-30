@@ -45,6 +45,21 @@ public class ProgressManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Quit으로 스테이지 선택씬 복귀 시 현재 월드로 포커싱 예약
+    /// </summary>
+    public void RequestWorldFocus()
+    {
+        if (worldList == null || CurrentWorld == null) return;
+
+        int index = worldList.worlds.FindIndex(w => w.worldId == CurrentWorld.worldId);
+        if (index >= 0)
+        {
+            _pendingWorldFocusIndex = index;
+            _pendingWorldWasLocked = false;
+        }
+    }
+
+    /// <summary>
     /// 현재 스테이지 클리어.
     /// 다음 스테이지가 있으면 인덱스 증가 후 true,
     /// 마지막 스테이지였으면 false 반환
