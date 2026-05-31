@@ -68,6 +68,12 @@ public class PlayerController : MonoBehaviour
         CheckOutOfBounds();
     }
 
+    void LateUpdate()
+    {
+        // 부모(MapPiece) 회전에 영향받지 않도록 항상 월드 rotation 고정
+        transform.rotation = Quaternion.identity;
+    }
+
     void CheckGrounded()
     {
         RaycastHit2D hit = Physics2D.BoxCast(

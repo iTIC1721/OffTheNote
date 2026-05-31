@@ -173,6 +173,9 @@ public class MapPieceManager : MonoBehaviour
             : Vector2.zero;
         player.transform.SetParent(newParent, worldPositionStays: true);
 
+        // 부모 회전에 영향받지 않도록 월드 rotation 고정
+        player.transform.rotation = Quaternion.identity;
+
         // 부모의 누적 scale을 역보정
         Vector3 parentScale = newParent != sceneRoot
             ? newParent.lossyScale
