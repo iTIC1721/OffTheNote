@@ -267,7 +267,25 @@ public class StageEditorWindow : EditorWindow
         if (GUILayout.Button((sel ? "▼ " : "▶ ") + $"[{i}] {piece.id}", EditorStyles.boldLabel))
         { selectedPieceIndex = sel ? -1 : i; selectedPlatformIndex = -1; }
 
-        if (!piece.isMovable) { GUI.color = new Color(1f, 0.7f, 0.3f); GUILayout.Label("FIXED", GUILayout.Width(36)); GUI.color = Color.white; }
+        switch (piece.GetPieceType())
+        {
+            case MapPieceType.Fixed:
+                GUI.color = new Color(1f, 0.7f, 0.3f);
+                GUILayout.Label("FIXED", GUILayout.Width(38));
+                GUI.color = Color.white;
+                break;
+            case MapPieceType.Pinned:
+                GUI.color = new Color(0.6f, 0.9f, 0.6f);
+                GUILayout.Label("PIN", GUILayout.Width(30));
+                GUI.color = Color.white;
+                break;
+            case MapPieceType.Flip:
+                GUI.color = new Color(0.6f, 0.85f, 1f);
+                GUILayout.Label("FLIP", GUILayout.Width(34));
+                GUI.color = Color.white;
+                break;
+        }
+
         if (GUILayout.Button("✕", GUILayout.Width(22)))
         {
             RecordUndo();
@@ -284,31 +302,36 @@ public class StageEditorWindow : EditorWindow
         piece.id = EditorGUILayout.TextField("ID", piece.id);
 
         piece.isVisible = EditorGUILayout.Toggle("Is Visible", piece.isVisible);
-        // isVisible이 꺼지면 isMovable, isPinned 강제 해제
+
+        // isVisible이 꺼지면 모든 동작 타입 강제 해제
         if (!piece.isVisible)
-        {
-            piece.isMovable = false;
-            piece.isPinned = false;
-        }
+            piece.SetPieceType(MapPieceType.Fixed);
 
-        // isPinned가 켜지면 isMovable 강제 해제
-        if (piece.isPinned)
-            piece.isMovable = false;
-
-        // isVisible 또는 isPinned에 의해 isMovable이 고정되는 경우 비활성화
-        GUI.enabled = piece.isVisible && !piece.isPinned;
-        piece.isMovable = EditorGUILayout.Toggle("Is Movable", piece.isMovable);
-        GUI.enabled = true;
-
-        // isPinned — isVisible이 꺼져 있으면 설정 불가
+        // ── 동작 타입 드롭다운 ──
+        // isVisible이 꺼져 있으면 타입 변경 불가
         GUI.enabled = piece.isVisible;
-        piece.isPinned = EditorGUILayout.Toggle("Is Pinned", piece.isPinned);
+        MapPieceType currentType = piece.GetPieceType();
+        MapPieceType newType = (MapPieceType)EditorGUILayout.EnumPopup("Piece Type", currentType);
+        if (newType != currentType)
+            piece.SetPieceType(newType);
         GUI.enabled = true;
 
+        // ── 타입별 추가 설정 ──
         if (piece.isPinned)
         {
             piece.pinLocalPosition = DrawV2Field(
                 "Pin Position", piece.pinLocalPosition, snapPosition);
+        }
+
+        if (piece.isFlippable)
+        {
+            // Flip Axis 드롭다운
+            string[] axisOptions = { "Y  (좌우 반전)", "X  (상하 반전)" };
+            int axisIdx = piece.flipAxis == "X" ? 1 : 0;
+            int newAxisIdx = EditorGUILayout.Popup("Flip Axis", axisIdx, axisOptions);
+            piece.flipAxis = newAxisIdx == 1 ? "X" : "Y";
+
+            piece.startFlipped = EditorGUILayout.Toggle("Start Flipped", piece.startFlipped);
         }
 
         piece.position = DrawV2Field("Position", piece.position, snapPosition);
@@ -580,15 +603,28 @@ public class StageEditorWindow : EditorWindow
             Vector2 size = piece.colliderSize.ToVector2();
             Rect pieceRect = WorldRectToViewport(pos - size * 0.5f, size, rect);
 
-            Color fill = piece.isMovable
-                ? (selPiece ? new Color(0.4f, 0.6f, 0.9f, 0.35f) : new Color(0.3f, 0.4f, 0.6f, 0.25f))
-                : new Color(0.5f, 0.4f, 0.2f, 0.25f);
+            Color fill;
+            switch (piece.GetPieceType())
+            {
+                case MapPieceType.Movable:
+                    fill = selPiece ? new Color(0.4f, 0.6f, 0.9f, 0.35f) : new Color(0.3f, 0.4f, 0.6f, 0.25f);
+                    break;
+                case MapPieceType.Pinned:
+                    fill = selPiece ? new Color(0.4f, 0.9f, 0.5f, 0.35f) : new Color(0.3f, 0.6f, 0.35f, 0.25f);
+                    break;
+                case MapPieceType.Flip:
+                    fill = selPiece ? new Color(0.3f, 0.8f, 1f, 0.35f) : new Color(0.2f, 0.55f, 0.75f, 0.25f);
+                    break;
+                default: // Fixed
+                    fill = new Color(0.5f, 0.4f, 0.2f, 0.25f);
+                    break;
+            }
             EditorGUI.DrawRect(pieceRect, fill);
             Handles.color = selPiece ? new Color(0.5f, 0.8f, 1f, 0.9f) : new Color(0.5f, 0.6f, 0.8f, 0.6f);
             DrawRectOutline(pieceRect);
             GUI.color = new Color(1, 1, 1, 0.7f);
             GUI.Label(new Rect(pieceRect.x + 3, pieceRect.y + 2, pieceRect.width, 16),
-                piece.id + (piece.isMovable ? "" : " [FIXED]"));
+                piece.id + piece.GetPieceType() switch { MapPieceType.Fixed => " [FIXED]", MapPieceType.Pinned => " [PIN]", MapPieceType.Flip => " [FLIP]", _ => "" });
             GUI.color = Color.white;
 
             // 조각 종속 오브젝트 (Platform, MovingPlatform 등)
@@ -753,6 +789,32 @@ public class StageEditorWindow : EditorWindow
                 Handles.DrawSolidDisc(new Vector3(vpPin.x, vpPin.y, 0), Vector3.forward, 6f);
                 Handles.color = new Color(0.3f, 0.3f, 0.3f, 0.9f);
                 Handles.DrawWireDisc(new Vector3(vpPin.x, vpPin.y, 0), Vector3.forward, 6f);
+            }
+
+            // Flip 아이콘: 조각 중앙에 뒤집기 축 방향 화살표 표시
+            if (piece.isFlippable)
+            {
+                Vector2 vpCenter = WorldToViewport(pos, rect);
+                // flipAxis "Y" = 좌우반전 = 가로 양방향 화살표
+                // flipAxis "X" = 상하반전 = 세로 양방향 화살표
+                bool isHoriz = piece.flipAxis != "X";
+                float arrowHalf = 12f; // 픽셀
+                Handles.color = new Color(0.3f, 0.85f, 1f, 0.9f);
+                Vector2 dir = isHoriz ? Vector2.right : Vector2.up;
+                Vector2 perp = isHoriz ? Vector2.up : Vector2.right;
+                Vector2 tipR = new Vector2(vpCenter.x + dir.x * arrowHalf, vpCenter.y - dir.y * arrowHalf);
+                Vector2 tipL = new Vector2(vpCenter.x - dir.x * arrowHalf, vpCenter.y + dir.y * arrowHalf);
+                Handles.DrawLine(new Vector3(tipL.x, tipL.y), new Vector3(tipR.x, tipR.y));
+                // 화살촉
+                float h = 5f;
+                Handles.DrawLine(new Vector3(tipR.x, tipR.y),
+                    new Vector3(tipR.x - dir.x * h - perp.x * h * 0.5f, tipR.y + dir.y * h + perp.y * h * 0.5f));
+                Handles.DrawLine(new Vector3(tipR.x, tipR.y),
+                    new Vector3(tipR.x - dir.x * h + perp.x * h * 0.5f, tipR.y + dir.y * h - perp.y * h * 0.5f));
+                Handles.DrawLine(new Vector3(tipL.x, tipL.y),
+                    new Vector3(tipL.x + dir.x * h - perp.x * h * 0.5f, tipL.y - dir.y * h + perp.y * h * 0.5f));
+                Handles.DrawLine(new Vector3(tipL.x, tipL.y),
+                    new Vector3(tipL.x + dir.x * h + perp.x * h * 0.5f, tipL.y - dir.y * h - perp.y * h * 0.5f));
             }
         }
 

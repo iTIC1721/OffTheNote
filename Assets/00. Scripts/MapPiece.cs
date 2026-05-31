@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using static UnityEngine.GridBrushBase;
 
 /// <summary>
 /// 드래그 가능한 맵 조각.
@@ -28,9 +29,32 @@ public class MapPiece : MonoBehaviour
     [SerializeField] private Vector2 pinLocalPosition = Vector2.zero;
     [SerializeField] private GameObject pinMarkerPrefab; // 회색 원 프리팹
 
+    [Header("Flip")]
+    [SerializeField] private bool isFlippable = false;
+    [SerializeField] private FlipAxis flipAxis = FlipAxis.X; // X축 뒤집기(상하) or Y축 뒤집기(좌우)
+
     public bool IsMovable => isMovable;
     public bool IsPinned => isPinned;
+    public bool IsFlippable => isFlippable;
     public void SetMovable(bool movable) => isMovable = movable;
+
+    /// <summary>
+    /// flip 축 방향의 현재 scale 계수 (cos 곡선: 1 → 0 → -1).
+    /// OutlineObject가 flip 축만 역보정을 해제할 때 참조한다.
+    /// flip 기능이 없는 조각은 항상 1을 반환.
+    /// </summary>
+    public float FlipScaleMultiplier
+    {
+        get
+        {
+            if (!isFlippable) return 1f;
+            float t = flipProgress / 180f;
+            return Mathf.Cos(t * Mathf.PI);
+        }
+    }
+
+    /// <summary>flip 축 (X = 상하반전, Y = 좌우반전)</summary>
+    public FlipAxis FlipAxisValue => flipAxis;
 
     // ── 내부 상태 ──────────────────────────────────────────────
     private Rigidbody2D rb;
@@ -54,6 +78,24 @@ public class MapPiece : MonoBehaviour
 
     private const float SNAP_SPEED = 8f;   // 스냅 보간 속도
     private const float SNAP_THRESHOLD = 30f; // 스냅 임계 각도 (도)
+
+    // 플립 상태
+    // flipProgress: 0 = 원본, 180 = 완전히 뒤집힘 (scale -1)
+    // 실제 scale 변환: axis==X → scaleY *= cos(flipProgress), axis==Y → scaleX *= cos(flipProgress)
+    private float flipProgress = 0f;      // 현재 플립 진행 각도 (0 ~ 180)
+    private float flipTargetProgress = 0f; // 목표 스냅 값 (0 or 180)
+    private float flipDragStart = 0f;      // 드래그 시작 시 flipProgress
+    private Vector2 flipDragStartMousePos = Vector2.zero;
+    private bool isFlipDragging = false;
+    private bool isFlipped = false;        // 현재 뒤집힌 상태 여부
+
+    // 플립 중 플레이어 추적
+    // 플레이어를 분리하지 않고 로컬 좌표를 flip에 맞춰 매 프레임 보정
+    private PlayerController flipTrackedPlayer = null; // 플립 중 위치를 추적할 플레이어
+
+    // 플립 드래그 감도: 이 픽셀만큼 마우스를 움직이면 180도 플립
+    private const float FLIP_DRAG_PIXELS = 150f;
+    private const float FLIP_SNAP_SPEED = 8f;
 
     // ── 그리드 스냅 (선택사항) ─────────────────────────────────
     [Header("Grid Snap (0 = off)")]
@@ -114,6 +156,32 @@ public class MapPiece : MonoBehaviour
             return;
         }
 
+        if (isFlippable)
+        {
+            // 플립 모드: 드래그로 뒤집기
+            isFlipDragging = true;
+            flipDragStart = flipProgress;
+            flipDragStartMousePos = GetMouseWorldPos();
+
+            // Platform 콜라이더 비활성화
+            // → 조각 위에 있던 플레이어는 부모-자식 관계로 scale/position이 자동 전파됨
+            // → 외부 플레이어는 조각을 통과해 낙하 → 리스폰
+            SetPlatformCollidersEnabled(false);
+
+            // 플레이어가 이 조각 위에 있으면 조작만 막는다
+            // 위치/scale은 부모(이 조각 또는 자식 MovingPlatform)의 transform이 자동으로 전파
+            PlayerController trackedPlayer = MapPieceManager.Instance?.GetPlayerIfOnPiece(this);
+            if (trackedPlayer != null)
+            {
+                flipTrackedPlayer = trackedPlayer;
+                trackedPlayer.SetControllable(false);
+            }
+
+            MapPieceManager.Instance?.SetFlipping(true);
+
+            if (!isMovable) return;
+        }
+
         if (!isMovable) return;
 
         isDragging = true;
@@ -151,6 +219,44 @@ public class MapPiece : MonoBehaviour
             return;
         }
 
+        if (isFlipDragging)
+        {
+            isFlipDragging = false;
+
+            // 가장 가까운 180도 스냅 (0 or 180)
+            float snapped = Mathf.Round(flipProgress / 180f) * 180f;
+
+            if (!IsFlipBlocked(snapped >= 90f))
+            {
+                flipTargetProgress = snapped;
+            }
+            else
+            {
+                // 막히면 반대쪽으로 스냅
+                float fallback = snapped >= 90f ? 0f : 180f;
+                if (!IsFlipBlocked(fallback >= 90f))
+                    flipTargetProgress = fallback;
+                else
+                    flipTargetProgress = isFlipped ? 180f : 0f; // 현재 상태 유지
+            }
+
+            // isDragging도 같이 종료
+            if (isDragging)
+            {
+                isDragging = false;
+                rb.linearVelocity = Vector2.zero;
+                SetSortingOrder(originalSortingOrder);
+            }
+
+            // flipProgress가 이미 목표값에 도달해 있으면 UpdateFlip의 justFinished가
+            // 발화되지 않으므로 여기서 즉시 복원한다.
+            if (Mathf.Approximately(flipProgress, flipTargetProgress))
+                FinishFlip();
+
+            // 플레이어 조작 복원은 스냅 완료(UpdateFlip) 시점에 처리
+            return;
+        }
+
         isDragging = false;
         rb.linearVelocity = Vector2.zero;
         SetSortingOrder(originalSortingOrder);
@@ -161,6 +267,9 @@ public class MapPiece : MonoBehaviour
     {
         if (isPinned)
             UpdatePinRotation();
+
+        if (isFlippable)
+            UpdateFlip();
     }
 
     void UpdatePinRotation()
@@ -277,6 +386,169 @@ public class MapPiece : MonoBehaviour
         // Rigidbody 동기화
         rb.MovePosition(transform.position);
         rb.MoveRotation(currentAngle);
+    }
+
+    // ── 플립 ──────────────────────────────────────────────────
+
+    void UpdateFlip()
+    {
+        if (isFlipDragging)
+        {
+            Vector2 mouseWorld = GetMouseWorldPos();
+            Vector2 mouseDelta = mouseWorld - flipDragStartMousePos;
+
+            // 축에 따라 드래그 방향 결정
+            // FlipAxis.X (상하 뒤집기): Y축 드래그
+            // FlipAxis.Y (좌우 뒤집기): X축 드래그
+            float dragAmount = flipAxis == FlipAxis.X ? -mouseDelta.y : mouseDelta.x;
+
+            // 월드 단위 → 플립 각도 변환 (FLIP_DRAG_PIXELS 월드유닛 = 180도)
+            float worldUnitsPerFlip = mainCam.orthographicSize * 2f * (FLIP_DRAG_PIXELS / Screen.height);
+            float deltaAngle = (dragAmount / worldUnitsPerFlip) * 180f;
+
+            float raw = Mathf.Clamp(flipDragStart + deltaAngle, 0f, 180f);
+
+            // 목표 상태(뒤집힘 여부) 미리 계산 후 충돌 체크
+            bool wouldBeFlipped = raw >= 90f;
+            if (!IsFlipBlocked(wouldBeFlipped))
+            {
+                flipProgress = raw;
+            }
+            else
+            {
+                // 막힌 경우 현재 위치를 새 기준으로 갱신
+                flipDragStart = flipProgress;
+                flipDragStartMousePos = mouseWorld;
+            }
+
+            flipTargetProgress = flipProgress;
+        }
+        else
+        {
+            // 스냅 보간
+            float prev = flipProgress;
+            flipProgress = Mathf.MoveTowards(
+                flipProgress,
+                flipTargetProgress,
+                FLIP_SNAP_SPEED * 180f * Time.deltaTime);
+
+            // 스냅 완료 시 복원
+            // prev != flipTargetProgress 조건으로 "이번 프레임에 도달"한 경우만 처리
+            if (prev != flipTargetProgress && Mathf.Approximately(flipProgress, flipTargetProgress))
+                FinishFlip();
+        }
+
+        ApplyFlip();
+    }
+
+    void ApplyFlip()
+    {
+        // flipProgress 0~180을 scale 변환으로 표현
+        // 0도: scale=1, 90도: scale=0(가장 얇음), 180도: scale=-1(뒤집힘)
+        float t = flipProgress / 180f;
+        float scaleFactor = Mathf.Cos(t * Mathf.PI); // 1 → 0 → -1
+
+        Vector3 s = transform.localScale;
+        if (flipAxis == FlipAxis.X)
+            s.y = scaleFactor;
+        else
+            s.x = scaleFactor;
+
+        transform.localScale = s;
+
+        isFlipped = flipProgress >= 90f;
+
+        // 플레이어 위치/scale은 부모-자식 관계로 Unity가 자동 전파한다.
+        // MapPieceManager.UpdatePlayerScale()이 매 프레임 localScale 역보정값을 갱신한다.
+    }
+
+    /// <summary>
+    /// 뒤집힌 상태에서 자식 콜라이더들이 다른 Platform/Blocker와 겹치는지 검사
+    /// </summary>
+    bool IsFlipBlocked(bool flippedState)
+    {
+        Vector3 savedScale = transform.localScale;
+
+        // 뒤집힌 상태의 scale 적용
+        Vector3 testScale = savedScale;
+        if (flipAxis == FlipAxis.X)
+            testScale.y = flippedState ? -1f : 1f;
+        else
+            testScale.x = flippedState ? -1f : 1f;
+
+        transform.localScale = testScale;
+        Physics2D.SyncTransforms();
+
+        bool blocked = false;
+        var platforms = GetComponentsInChildren<BoxCollider2D>();
+        int platformLayer = LayerMask.NameToLayer("Platform");
+        int blockerLayer = LayerMask.NameToLayer("Blocker");
+        int checkMask = LayerMask.GetMask("Platform", "Blocker");
+        float shrink = 0.05f;
+
+        foreach (var col in platforms)
+        {
+            if (col.gameObject.layer != platformLayer &&
+                col.gameObject.layer != blockerLayer) continue;
+
+            Vector2 colWorldCenter = (Vector2)col.transform.TransformPoint(col.offset);
+            Vector2 colWorldSize = new Vector2(
+                col.size.x * Mathf.Abs(col.transform.lossyScale.x),
+                col.size.y * Mathf.Abs(col.transform.lossyScale.y));
+
+            float colAngle = col.transform.eulerAngles.z;
+            Vector2 size = new Vector2(
+                Mathf.Max(0.01f, colWorldSize.x - shrink),
+                Mathf.Max(0.01f, colWorldSize.y - shrink));
+
+            Collider2D[] hits = Physics2D.OverlapBoxAll(colWorldCenter, size, colAngle, checkMask);
+            foreach (var hit in hits)
+            {
+                if (hit.transform.IsChildOf(transform)) continue;
+                blocked = true;
+                break;
+            }
+            if (blocked) break;
+        }
+
+        // 복원
+        transform.localScale = savedScale;
+        Physics2D.SyncTransforms();
+
+        return blocked;
+    }
+
+    /// <summary>
+    /// 플립 완료 시 공통 정리: 콜라이더 복원, 플레이어 조작 복원, 플립 플래그 해제.
+    /// StopDrag(즉시 완료)와 UpdateFlip(스냅 보간 완료) 두 경로에서 모두 호출된다.
+    /// </summary>
+    void FinishFlip()
+    {
+        SetPlatformCollidersEnabled(true);
+
+        if (flipTrackedPlayer != null)
+        {
+            flipTrackedPlayer.SetControllable(true);
+            flipTrackedPlayer = null;
+        }
+
+        MapPieceManager.Instance?.SetFlipping(false);
+    }
+
+    /// <summary>
+    /// 플립 중 외부 플레이어의 진입을 막기 위해 Platform 자식 콜라이더를 켜고 끈다.
+    /// 비활성화된 동안 외부 플레이어는 조각을 통과해 낙하(→ 리스폰)한다.
+    /// 추적 중인 내부 플레이어는 ApplyFlip이 transform.position으로 직접 제어하므로
+    /// 콜라이더 상태와 무관하게 올바른 위치에 배치된다.
+    /// </summary>
+    void SetPlatformCollidersEnabled(bool enable)
+    {
+        int platformLayer = LayerMask.NameToLayer("Platform");
+        foreach (var col in GetComponentsInChildren<BoxCollider2D>())
+        {
+            if (col.gameObject.layer == platformLayer)
+                col.enabled = enable;
+        }
     }
 
     // ── 매 물리 프레임마다 위치 업데이트 ──────────────────────
@@ -485,6 +757,27 @@ public class MapPiece : MonoBehaviour
         }
     }
 
+    public void SetupFlip(bool flippable, FlipAxis axis, bool startFlipped = false)
+    {
+        isFlippable = flippable;
+        flipAxis = axis;
+
+        if (startFlipped)
+        {
+            flipProgress = 180f;
+            flipTargetProgress = 180f;
+            isFlipped = true;
+            ApplyFlip();
+        }
+        else
+        {
+            flipProgress = 0f;
+            flipTargetProgress = 0f;
+            isFlipped = false;
+            ApplyFlip();
+        }
+    }
+
     // ── 에디터 기즈모 ─────────────────────────────────────────
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()
@@ -500,4 +793,11 @@ public class MapPiece : MonoBehaviour
         }
     }
 #endif
+}
+
+// MapPiece 뒤집기 축
+public enum FlipAxis
+{
+    X, // X축 기준 뒤집기 (상하 반전, Y 스케일 반전)
+    Y  // Y축 기준 뒤집기 (좌우 반전, X 스케일 반전)
 }

@@ -40,12 +40,25 @@ public class OutlineObject : MonoBehaviour
     // 단색 머티리얼 캐시
     private Material outlineMaterial;
 
+    // 이 오브젝트가 속한 MapPiece (flip 상태 참조용). 없으면 null
+    private MapPiece ownerPiece;
+
     void OnEnable()
     {
         mainSr = GetComponent<SpriteRenderer>();
         timeOffset = Random.Range(0f, 100f); // 오브젝트마다 다른 노이즈 패턴
+        ownerPiece = GetComponentInParent<MapPiece>(); // 속한 MapPiece 탐색 (flip 상태 참조용)
         CreateOutlineObject();
         RebuildMesh();
+    }
+
+    /// <summary>
+    /// 부모 계층이 바뀐 뒤 ownerPiece를 다시 탐색한다.
+    /// MapPieceManager.SetParent에서 플레이어 부모가 변경될 때 호출된다.
+    /// </summary>
+    public void RefreshOwnerPiece()
+    {
+        ownerPiece = GetComponentInParent<MapPiece>();
     }
 
     void OnDisable()
@@ -68,13 +81,6 @@ public class OutlineObject : MonoBehaviour
         outlineObj.hideFlags = HideFlags.HideAndDontSave;
         outlineObj.transform.SetParent(transform, false);
         outlineObj.transform.localPosition = new Vector3(0, 0, 0.01f);
-
-        // 부모 scale 상속을 상쇄
-        Vector3 s = transform.lossyScale;
-        outlineObj.transform.localScale = new Vector3(
-            Mathf.Abs(s.x) > 0.0001f ? 1f / s.x : 1f,
-            Mathf.Abs(s.y) > 0.0001f ? 1f / s.y : 1f,
-            1f);
 
         meshFilter = outlineObj.AddComponent<MeshFilter>();
         meshRenderer = outlineObj.AddComponent<MeshRenderer>();
@@ -104,12 +110,7 @@ public class OutlineObject : MonoBehaviour
     {
         if (mainSr == null || outlineObj == null) return;
 
-        // 부모 scale 변경 시 자식 scale 동기화
-        Vector3 s = transform.lossyScale;
-        outlineObj.transform.localScale = new Vector3(
-            Mathf.Abs(s.x) > 0.0001f ? 1f / s.x : 1f,
-            Mathf.Abs(s.y) > 0.0001f ? 1f / s.y : 1f,
-            1f);
+        SyncOutlineScale();
 
         // Sorting 동기화
         meshRenderer.sortingLayerID = mainSr.sortingLayerID;
@@ -119,28 +120,75 @@ public class OutlineObject : MonoBehaviour
             RebuildMesh();
     }
 
+    /// <summary>
+    /// outlineObj의 localScale을 조정한다.
+    ///
+    /// 기본 원칙: 부모의 lossyScale을 역보정해서 메시가 항상 월드 기준 크기로 보이게 한다.
+    /// (플랫폼 크기가 localScale로 구현되므로 역보정이 없으면 scale에 따라 메시가 찌그러짐)
+    ///
+    /// flip 예외: flip 축 방향은 역보정을 하지 않는다.
+    /// flip 중 해당 축의 lossyScale이 0→-1로 변하는 것을 outlineObj에 그대로 전달해서
+    /// 메시도 함께 납작해지고 뒤집히도록 한다.
+    /// </summary>
+    void SyncOutlineScale()
+    {
+        Vector3 s = transform.lossyScale;
+
+        // 항상 lossyScale을 역보정해서 outlineObj.lossyScale = 1로 유지.
+        // flip 중 납작해지는 효과는 RebuildMesh에서 메시 좌표에
+        // ownerPiece.FlipScaleMultiplier를 직접 곱해서 표현한다.
+        float sx = Mathf.Abs(s.x) > 0.0001f ? 1f / s.x : 1f;
+        float sy = Mathf.Abs(s.y) > 0.0001f ? 1f / s.y : 1f;
+
+        outlineObj.transform.localScale = new Vector3(sx, sy, 1f);
+    }
+
     void RebuildMesh()
     {
         if (outlineMesh == null || mainSr == null || mainSr.sprite == null) return;
 
-        // 스프라이트 로컬 크기 × localScale = 실제 로컬 공간 크기
+        // 메시 좌표는 outlineObj의 로컬 공간 기준.
+        // outlineObj.localScale = 1/lossyScale(역보정)이므로
+        // 메시는 월드 기준 크기로 계산해야 한다 = spriteSize × lossyScale.
+        // lossyScale = localScale × 부모누적scale이므로, 여기선 편의상
+        // spriteSize × |localScale|을 곱한 뒤 outlineObj의 역보정으로 상쇄한다.
         Vector2 spriteSize = mainSr.sprite.bounds.size;
         Vector2 spriteCenter = mainSr.sprite.bounds.center;
+
+        // SpriteRenderer Sliced/Tiled 모드는 size 프로퍼티가 실제 크기
+        if (mainSr.drawMode == SpriteDrawMode.Sliced || mainSr.drawMode == SpriteDrawMode.Tiled)
+            spriteSize = mainSr.size;
+
         Vector3 ls = transform.localScale;
 
-        float w = spriteSize.x * Mathf.Abs(ls.x) * 0.5f + outlineWidth;
-        float h = spriteSize.y * Mathf.Abs(ls.y) * 0.5f + outlineWidth;
+        // flip 중 납작해지는 효과: ownerPiece.FlipScaleMultiplier(1→0→-1)를
+        // flip 축 방향의 localScale에 곱한다.
+        // outlineObj.lossyScale은 항상 1로 역보정되어 있으므로
+        // 메시 좌표가 곧 월드 크기가 된다.
+        float scaleX = ls.x;
+        float scaleY = ls.y;
+        if (ownerPiece != null && ownerPiece.IsFlippable)
+        {
+            float flipMul = ownerPiece.FlipScaleMultiplier;
+            if (ownerPiece.FlipAxisValue == FlipAxis.Y)
+                scaleX = ls.x * flipMul;
+            else
+                scaleY = ls.y * flipMul;
+        }
+
+        float w = spriteSize.x * Mathf.Abs(scaleX) * 0.5f + outlineWidth;
+        float h = spriteSize.y * Mathf.Abs(scaleY) * 0.5f + outlineWidth;
         Vector2 center = new Vector2(
-            spriteCenter.x * ls.x,
-            spriteCenter.y * ls.y);
+            spriteCenter.x * scaleX,
+            spriteCenter.y * scaleY);
 
         // 사각형의 네 꼭짓점 (시계 방향)
         Vector2[] corners = new Vector2[]
         {
-        new Vector2(center.x - w, center.y - h),
-        new Vector2(center.x - w, center.y + h),
-        new Vector2(center.x + w, center.y + h),
-        new Vector2(center.x + w, center.y - h),
+            new Vector2(center.x - w, center.y - h),
+            new Vector2(center.x - w, center.y + h),
+            new Vector2(center.x + w, center.y + h),
+            new Vector2(center.x + w, center.y - h),
         };
 
         float t = animate ? (Time.time * animSpeed + timeOffset) : timeOffset;
@@ -166,10 +214,8 @@ public class OutlineObject : MonoBehaviour
 
         BuildLineMesh(points, lineThickness);
 
-        // AddStrokesToMesh도 스프라이트 로컬 크기 기준으로 전달
         if (drawStrokes)
         {
-            // Bounds를 로컬 기준으로 재구성
             Bounds localBounds = new Bounds(spriteCenter, spriteSize);
             AddStrokesToMesh(localBounds, w, h, center);
         }

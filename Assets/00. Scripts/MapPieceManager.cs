@@ -29,6 +29,10 @@ public class MapPieceManager : MonoBehaviour
 
     private bool isParentLocked = false;
 
+    // 플립 진행 중 플래그 - DetectAndReparent/ResolveExternalOverlap 억제용
+    private bool isFlipping = false;
+    public void SetFlipping(bool flipping) => isFlipping = flipping;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -60,9 +64,20 @@ public class MapPieceManager : MonoBehaviour
         player.transform.localScale = Vector3.one;
     }
 
+    /// <summary>
+    /// 플레이어가 지정한 MapPiece 위에 있으면(자식 계층에 속하면) 플레이어를 반환.
+    /// 플립 시작 시 조작 정지 대상을 결정하는 데 사용.
+    /// </summary>
+    public PlayerController GetPlayerIfOnPiece(MapPiece piece)
+    {
+        if (currentPiece != piece) return null;
+        return player;
+    }
+
     void DetectAndReparent()
     {
         if (isParentLocked) return;
+        if (isFlipping) return; // 플립 중에는 부모 변경 금지
 
         MapPiece dragging = MapPieceSelector.Instance.DraggingPiece;
 
@@ -167,10 +182,17 @@ public class MapPieceManager : MonoBehaviour
             Mathf.Abs(parentScale.x) > 0.0001f ? 1f / parentScale.x : 1f,
             Mathf.Abs(parentScale.y) > 0.0001f ? 1f / parentScale.y : 1f,
             1f);
+
+        // 부모가 바뀌면 OutlineObject가 ownerPiece를 다시 탐색하도록 갱신
+        foreach (var outline in player.GetComponentsInChildren<OutlineObject>())
+            outline.RefreshOwnerPiece();
     }
 
     void TrackPieceMovement()
     {
+        // 플립 중에는 겹침 해소를 건너뜀
+        if (isFlipping) return;
+
         // 다른 맵 조각과의 겹침을 매 프레임 해소
         player.ResolveExternalOverlap(currentPiece);
     }

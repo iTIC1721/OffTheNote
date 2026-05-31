@@ -67,6 +67,12 @@ public class StageLoader : MonoBehaviour
 
                 if (pieceData.isPinned)
                     piece.SetupPin(true, pieceData.pinLocalPosition.ToVector2());
+
+                if (pieceData.isFlippable)
+                {
+                    FlipAxis axis = pieceData.flipAxis == "X" ? FlipAxis.X : FlipAxis.Y;
+                    piece.SetupFlip(true, axis, pieceData.startFlipped);
+                }
             }
 
             BoxCollider2D clickCol = pieceObj.GetComponent<BoxCollider2D>();

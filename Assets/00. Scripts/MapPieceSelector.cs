@@ -36,7 +36,7 @@ public class MapPieceSelector : MonoBehaviour
             foreach (var hit in hits)
             {
                 MapPiece piece = hit.GetComponent<MapPiece>();
-                if (piece != null && (piece.IsMovable || piece.IsPinned) && !candidates.Contains(piece))
+                if (piece != null && (piece.IsMovable || piece.IsPinned || piece.IsFlippable) && !candidates.Contains(piece))
                     candidates.Add(piece);
             }
 
