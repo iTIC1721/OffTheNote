@@ -53,6 +53,8 @@ MonoBehaviour:
   isPinned: 0
   pinLocalPosition: {x: 0, y: 0}
   pinMarkerPrefab: {fileID: 1390008376439997796, guid: 165e049f63583ee4db8fc2aee76d8d99, type: 3}
+  isFlippable: 0
+  flipAxis: 0
   snapSize: 0
 --- !u!212 &476514621640023717
 SpriteRenderer:
@@ -244,7 +246,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -263,8 +265,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1446832559
+  m_SortingLayer: 2
   m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 8757e374277287b4dbcf3a0a5594a972, type: 3}

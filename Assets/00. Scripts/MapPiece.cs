@@ -38,6 +38,24 @@ public class MapPiece : MonoBehaviour
     public bool IsFlippable => isFlippable;
     public void SetMovable(bool movable) => isMovable = movable;
 
+    /// <summary>맵 조각 자체의 면적 (BoxCollider2D.size 기준).</summary>
+    public float GetPlatformArea()
+    {
+        if (pieceArea == null) return 0f;
+        return pieceArea.size.x * pieceArea.size.y;
+    }
+
+    /// <summary>
+    /// MapPieceManager.RefreshSortingOrders()에서 호출.
+    /// 드래그 중이 아닐 때만 즉시 반영하고, originalSortingOrder도 갱신한다.
+    /// </summary>
+    public void SetBaseSortingOrder(int order)
+    {
+        originalSortingOrder = order;
+        if (!isDragging)
+            SetSortingOrder(originalSortingOrder);
+    }
+
     /// <summary>
     /// flip 축 방향의 현재 scale 계수 (cos 곡선: 1 → 0 → -1).
     /// OutlineObject가 flip 축만 역보정을 해제할 때 참조한다.
@@ -129,7 +147,7 @@ public class MapPiece : MonoBehaviour
         sr.sprite = isMovable ? MapPieceManager.Instance.movableSprite : MapPieceManager.Instance.immovableSprite;
         sr.size = pieceArea.size + Vector2.one * MapPieceManager.Instance.mapPiecePadding;
 
-        originalSortingOrder = isMovable ? 0 : -2;
+        // sortingOrder는 MapPieceManager.Start()에서 RefreshSortingOrders()로 일괄 할당된다.
         SetSortingOrder(originalSortingOrder);
 
         lastPosition = rb.position;
@@ -144,6 +162,9 @@ public class MapPiece : MonoBehaviour
 
     public void StartDrag()
     {
+        // 조작 시작 즉시 이 조각을 최상위로 올린다
+        MapPieceManager.Instance?.RefreshSortingOrders(this);
+
         if (isPinned)
         {
             // 핀 모드: 드래그로 회전
@@ -187,7 +208,6 @@ public class MapPiece : MonoBehaviour
         isDragging = true;
         Vector2 mouseWorld = GetMouseWorldPos();
         dragOffset = rb.position - mouseWorld;
-        SetSortingOrder(MapPieceManager.Instance.sortingOrderWhenDragged);
     }
 
     public void StopDrag()
@@ -216,6 +236,7 @@ public class MapPiece : MonoBehaviour
                 else
                     targetAngle = currentAngle; // 양쪽 다 막히면 현재 유지
             }
+            MapPieceManager.Instance?.RefreshSortingOrders(null);
             return;
         }
 
@@ -249,7 +270,7 @@ public class MapPiece : MonoBehaviour
             {
                 isDragging = false;
                 rb.linearVelocity = Vector2.zero;
-                SetSortingOrder(originalSortingOrder);
+                MapPieceManager.Instance?.RefreshSortingOrders(null);
             }
 
             // flipProgress가 이미 목표값에 도달해 있으면 UpdateFlip의 justFinished가
@@ -263,7 +284,7 @@ public class MapPiece : MonoBehaviour
 
         isDragging = false;
         rb.linearVelocity = Vector2.zero;
-        SetSortingOrder(originalSortingOrder);
+        MapPieceManager.Instance?.RefreshSortingOrders(null);
     }
 
     // ── 매 프레임마다 회전 업데이트 ──────────────────────

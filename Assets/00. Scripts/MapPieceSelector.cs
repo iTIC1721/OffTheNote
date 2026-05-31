@@ -13,7 +13,6 @@ public class MapPieceSelector : MonoBehaviour
     private MapPiece draggingPiece;
 
     private Camera mainCam;
-    private List<MapPiece> recentMoveOrder = new List<MapPiece>();
 
     private bool isDragEnabled = true;
 
@@ -44,9 +43,6 @@ public class MapPieceSelector : MonoBehaviour
 
             draggingPiece = GetTopPriority(candidates);
             draggingPiece.StartDrag();
-
-            recentMoveOrder.Remove(draggingPiece);
-            recentMoveOrder.Add(draggingPiece);
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -58,50 +54,19 @@ public class MapPieceSelector : MonoBehaviour
 
     MapPiece GetTopPriority(List<MapPiece> candidates)
     {
-        // 1순위: 플레이어가 속한 조각들로 범위 축소
-        List<MapPiece> playerPieces = GetPlayerPieces();
-        List<MapPiece> playerCandidates = candidates.FindAll(p => playerPieces.Contains(p));
-
-        List<MapPiece> pool = playerCandidates.Count > 0 ? playerCandidates : candidates;
-
-        // 2순위: pool 안에서 가장 최근에 움직인 조각
-        for (int i = recentMoveOrder.Count - 1; i >= 0; i--)
-        {
-            if (pool.Contains(recentMoveOrder[i]))
-                return recentMoveOrder[i];
-        }
-
-        // 3순위: pool 안에서 sortingOrder가 가장 높은 조각
-        MapPiece topRendered = null;
+        MapPiece top = null;
         int topOrder = int.MinValue;
-        foreach (var piece in pool)
+        foreach (var piece in candidates)
         {
             SpriteRenderer sr = piece.GetComponent<SpriteRenderer>();
             int order = sr != null ? sr.sortingOrder : 0;
             if (order > topOrder)
             {
                 topOrder = order;
-                topRendered = piece;
+                top = piece;
             }
         }
-        return topRendered;
-    }
-
-    List<MapPiece> GetPlayerPieces()
-    {
-        List<MapPiece> result = new List<MapPiece>();
-        if (GameManager.Instance?.AllPieces == null) return result;
-
-        PlayerController player = FindFirstObjectByType<PlayerController>();
-        if (player == null) return result;
-
-        Vector2 playerPos = player.transform.position;
-        foreach (var piece in GameManager.Instance.AllPieces)
-        {
-            if (piece.ContainsPlayer(playerPos))
-                result.Add(piece);
-        }
-        return result;
+        return top;
     }
 
     public void StopAllDragging()

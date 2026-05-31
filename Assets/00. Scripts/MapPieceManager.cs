@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MapPieceManager : MonoBehaviour
@@ -41,12 +43,56 @@ public class MapPieceManager : MonoBehaviour
     void Start()
     {
         sceneRoot = player.transform.parent;
+        RefreshSortingOrders(null);
     }
 
     void FixedUpdate()
     {
         DetectAndReparent();
         TrackPieceMovement();
+    }
+
+    /// <summary>
+    /// 전체 맵 조각의 sortingOrder를 재계산한다.
+    /// 규칙:
+    ///   1) fixed 조각(isMovable·isPinned·isFlippable 모두 false): 항상 가장 뒤
+    ///   2) non-fixed 조각: 면적 내림차순 (큰 것이 낮은 order = 뒤, 작은 것이 높은 order = 앞)
+    ///   3) activeSelected가 있으면 non-fixed 중 무조건 맨 앞 (조작 중인 동안만)
+    /// </summary>
+    public void RefreshSortingOrders(MapPiece activeSelected)
+    {
+        var allPieces = GameManager.Instance?.AllPieces;
+        if (allPieces == null || allPieces.Length == 0) return;
+
+        var fixedPieces = new List<MapPiece>();
+        var nonFixedPieces = new List<MapPiece>();
+
+        foreach (var piece in allPieces)
+        {
+            if (!piece.IsMovable && !piece.IsPinned && !piece.IsFlippable)
+                fixedPieces.Add(piece);
+            else
+                nonFixedPieces.Add(piece);
+        }
+
+        // 1) fixed: 면적 내림차순 → order 0, 1, 2 …
+        fixedPieces.Sort((a, b) => b.GetPlatformArea().CompareTo(a.GetPlatformArea()));
+        for (int i = 0; i < fixedPieces.Count; i++)
+            fixedPieces[i].SetBaseSortingOrder(i);
+
+        // 2) non-fixed: activeSelected 제외하고 면적 내림차순
+        var others = new List<MapPiece>(nonFixedPieces);
+        if (activeSelected != null) others.Remove(activeSelected);
+
+        others.Sort((a, b) => b.GetPlatformArea().CompareTo(a.GetPlatformArea()));
+
+        int order = 100;
+        foreach (var p in others)
+            p.SetBaseSortingOrder(order++);
+
+        // 3) 조작 중인 조각은 맨 앞
+        if (activeSelected != null)
+            activeSelected.SetBaseSortingOrder(order);
     }
 
     public void LockParent()
