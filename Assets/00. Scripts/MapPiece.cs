@@ -94,7 +94,7 @@ public class MapPiece : MonoBehaviour
     private PlayerController flipTrackedPlayer = null; // 플립 중 위치를 추적할 플레이어
 
     // 플립 드래그 감도: 이 픽셀만큼 마우스를 움직이면 180도 플립
-    private const float FLIP_DRAG_PIXELS = 150f;
+    private const float FLIP_DRAG_PIXELS = 200f;
     private const float FLIP_SNAP_SPEED = 8f;
 
     // ── 그리드 스냅 (선택사항) ─────────────────────────────────
@@ -223,21 +223,25 @@ public class MapPiece : MonoBehaviour
         {
             isFlipDragging = false;
 
-            // 가장 가까운 180도 스냅 (0 or 180)
+            // 가장 가까운 180도 배수로 스냅 (무한 회전 지원)
             float snapped = Mathf.Round(flipProgress / 180f) * 180f;
+            float normalizedSnapped = ((snapped % 360f) + 360f) % 360f;
+            bool snappedIsFlipped = normalizedSnapped >= 90f && normalizedSnapped < 270f;
 
-            if (!IsFlipBlocked(snapped >= 90f))
+            if (!IsFlipBlocked(snappedIsFlipped))
             {
                 flipTargetProgress = snapped;
             }
             else
             {
-                // 막히면 반대쪽으로 스냅
-                float fallback = snapped >= 90f ? 0f : 180f;
-                if (!IsFlipBlocked(fallback >= 90f))
+                // 막히면 반대쪽 180도 배수로 스냅
+                float fallback = snapped > flipProgress ? snapped - 180f : snapped + 180f;
+                float normalizedFallback = ((fallback % 360f) + 360f) % 360f;
+                bool fallbackIsFlipped = normalizedFallback >= 90f && normalizedFallback < 270f;
+                if (!IsFlipBlocked(fallbackIsFlipped))
                     flipTargetProgress = fallback;
                 else
-                    flipTargetProgress = isFlipped ? 180f : 0f; // 현재 상태 유지
+                    flipTargetProgress = flipProgress; // 현재 상태 유지
             }
 
             // isDragging도 같이 종료
@@ -406,10 +410,11 @@ public class MapPiece : MonoBehaviour
             float worldUnitsPerFlip = mainCam.orthographicSize * 2f * (FLIP_DRAG_PIXELS / Screen.height);
             float deltaAngle = (dragAmount / worldUnitsPerFlip) * 180f;
 
-            float raw = Mathf.Clamp(flipDragStart + deltaAngle, 0f, 180f);
+            float raw = flipDragStart + deltaAngle;
 
-            // 목표 상태(뒤집힘 여부) 미리 계산 후 충돌 체크
-            bool wouldBeFlipped = raw >= 90f;
+            // 목표 상태(뒤집힘 여부): 누적 각도를 360으로 나눈 나머지 기준
+            float normalizedRaw = ((raw % 360f) + 360f) % 360f;
+            bool wouldBeFlipped = normalizedRaw >= 90f && normalizedRaw < 270f;
             if (!IsFlipBlocked(wouldBeFlipped))
             {
                 flipProgress = raw;
@@ -456,10 +461,8 @@ public class MapPiece : MonoBehaviour
 
         transform.localScale = s;
 
-        isFlipped = flipProgress >= 90f;
-
-        // 플레이어 위치/scale은 부모-자식 관계로 Unity가 자동 전파한다.
-        // MapPieceManager.UpdatePlayerScale()이 매 프레임 localScale 역보정값을 갱신한다.
+        isFlipped = (((flipProgress % 360f) + 360f) % 360f) >= 90f &&
+                    (((flipProgress % 360f) + 360f) % 360f) < 270f;
     }
 
     /// <summary>
