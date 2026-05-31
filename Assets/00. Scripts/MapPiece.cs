@@ -726,8 +726,8 @@ public class MapPiece : MonoBehaviour
     {
         if (immovableObject == null) return;
 
-        immovableObject.SetActive(sr.enabled && !isMovable && !isPinned);
-        if (isMovable || isPinned) return;
+        immovableObject.SetActive(sr.enabled && !isMovable && !isPinned && !isFlippable);
+        if (isMovable || isPinned || isFlippable) return;
 
         Vector2 pieceSize = pieceArea.size;
         Vector3 parentScale = transform.localScale;
