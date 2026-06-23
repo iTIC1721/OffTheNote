@@ -62,7 +62,8 @@ MonoBehaviour:
   strokeNoiseAmount: 0.015
   strokeSegments: 5
   pieceColor: {r: 0.15, g: 0.08, b: 0.03, a: 1}
-  sortingOrder: 10
+  sortingLayerName: Object
+  sortingOrder: 99999
 --- !u!1 &7942102447507241695
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1611be60cd5f92149914e1cd7be9a762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OutlineObject
-  outlineColor: {r: 0.15, g: 0.08, b: 0.03, a: 1}
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
   outlineWidth: 0.01
   noiseAmount: 0.015
   noiseFrequency: 8

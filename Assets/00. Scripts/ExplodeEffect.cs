@@ -37,6 +37,7 @@ public class ExplodeEffect : MonoBehaviour
 
     [Header("Visual")]
     [SerializeField] private Color pieceColor = new Color(0.15f, 0.08f, 0.03f, 1f);
+    [SerializeField] private string sortingLayerName = "Default";
     [SerializeField] private int sortingOrder = 10;
 
     // 현재 재생 중인 이펙트 루트 목록 (복수 공존 가능)
@@ -55,7 +56,7 @@ public class ExplodeEffect : MonoBehaviour
     {
         // 이펙트 전용 루트 생성
         var root = new GameObject("_DeathEffect");
-        root.transform.position = position;
+        root.transform.position = new Vector3(position.x, position.y, -1f);
         activeRoots.Add(root);
 
         // 코루틴을 root에 붙은 EffectRunner에서 실행
@@ -120,6 +121,7 @@ public class ExplodeEffect : MonoBehaviour
         var mat = new Material(Shader.Find("Sprites/Default"));
         mat.color = pieceColor;
         mr.material = mat;
+        mr.sortingLayerName = sortingLayerName;
         mr.sortingOrder = sortingOrder;
 
         var mesh = new Mesh();

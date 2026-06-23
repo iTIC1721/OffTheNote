@@ -53,6 +53,8 @@ MonoBehaviour:
   pointA: {x: 0, y: 0}
   pointB: {x: 3, y: 0}
   loopPoints: []
+  reverseOnCollision: 1
+  collisionShrink: 0.01
 --- !u!114 &2946903216391241917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1611be60cd5f92149914e1cd7be9a762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OutlineObject
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0.83396226, g: 0.83396226, b: 0.83396226, a: 1}
   outlineWidth: 0
   noiseAmount: 0.001
   noiseFrequency: 4
