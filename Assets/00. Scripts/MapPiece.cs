@@ -323,7 +323,21 @@ public class MapPiece : MonoBehaviour
             if (!IsRotationBlocked(rawTarget))
             {
                 targetAngle = rawTarget;
-                currentAngle = targetAngle;
+
+                float angleDelta = Mathf.DeltaAngle(currentAngle, targetAngle);
+                float stepSize = 3f;
+                int steps = Mathf.CeilToInt(Mathf.Abs(angleDelta) / stepSize);
+                float sign = Mathf.Sign(angleDelta);
+
+                float safeAngle = currentAngle;
+                for (int i = 1; i <= steps; i++)
+                {
+                    float candidate = currentAngle + sign * Mathf.Min(stepSize * i, Mathf.Abs(angleDelta));
+                    if (IsRotationBlocked(candidate)) break;
+                    safeAngle = candidate;
+                }
+
+                currentAngle = safeAngle;
             }
             else
             {
