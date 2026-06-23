@@ -22,7 +22,8 @@ public class MapPiece : MonoBehaviour
     [SerializeField] private bool isMovable = true;
 
     [Header("Immovable")]
-    [SerializeField] private GameObject immovableObject;
+    [SerializeField] private Color movableColor = new Color(1f, 1f, 1f, 1f);
+    [SerializeField] private Color immovableColor = new Color(0.75f, 0.75f, 0.75f, 1f);
 
     [Header("Pin")]
     [SerializeField] private bool isPinned = false;
@@ -36,7 +37,11 @@ public class MapPiece : MonoBehaviour
     public bool IsMovable => isMovable;
     public bool IsPinned => isPinned;
     public bool IsFlippable => isFlippable;
-    public void SetMovable(bool movable) => isMovable = movable;
+    public void SetMovable(bool movable)
+    {
+        isMovable = movable;
+        if (sr != null) RefreshColor();
+    }
 
     /// <summary>맵 조각 자체의 면적 (BoxCollider2D.size 기준).</summary>
     public float GetPlatformArea()
@@ -143,7 +148,7 @@ public class MapPiece : MonoBehaviour
 
     private void Start()
     {
-        sr.color = MapPieceManager.Instance.color;
+        RefreshColor();
         sr.sprite = isMovable ? MapPieceManager.Instance.movableSprite : MapPieceManager.Instance.immovableSprite;
         sr.size = pieceArea.size + Vector2.one * MapPieceManager.Instance.mapPiecePadding;
 
@@ -152,7 +157,7 @@ public class MapPiece : MonoBehaviour
 
         lastPosition = rb.position;
 
-        SetupImmovableObject();
+        //SetupImmovableObject();
 
         if (isPinned)
             SetupPin(isPinned, pinLocalPosition);
@@ -737,8 +742,8 @@ public class MapPiece : MonoBehaviour
         sr.enabled = visible;
 
         // immovableObject도 visible이 꺼지면 숨김
-        if (immovableObject != null && !visible)
-            immovableObject.SetActive(false);
+        //if (immovableObject != null && !visible)
+        //    immovableObject.SetActive(false);
     }
 
     void SetSortingOrder(int order)
@@ -746,26 +751,35 @@ public class MapPiece : MonoBehaviour
         sr.sortingOrder = order;
     }
 
-    void SetupImmovableObject()
+    /// <summary>
+    /// isMovable 상태에 따라 SpriteRenderer 색상을 갱신한다.
+    /// movable이면 MapPieceManager.color, immovable이면 immovableColor를 적용한다.
+    /// </summary>
+    void RefreshColor()
     {
-        if (immovableObject == null) return;
-
-        immovableObject.SetActive(sr.enabled && !isMovable && !isPinned && !isFlippable);
-        if (isMovable || isPinned || isFlippable) return;
-
-        Vector2 pieceSize = pieceArea.size;
-        Vector3 parentScale = transform.localScale;
-        float scaleX = Mathf.Abs(parentScale.x) > 0.0001f ? 1f / parentScale.x : 1f;
-        float scaleY = Mathf.Abs(parentScale.y) > 0.0001f ? 1f / parentScale.y : 1f;
-
-        float sizeRatio = pieceSize.x * 0.25f;
-        immovableObject.transform.localScale = new Vector3(scaleX * sizeRatio, scaleY * sizeRatio, 1f);
-
-        // MapPiece 위쪽 경계선으로 이동
-        // pieceArea.offset은 콜라이더 중심 오프셋, pieceSize.y * 0.5f는 위쪽 경계까지의 거리
-        float topY = pieceArea.offset.y + pieceSize.y * 0.5f + MapPieceManager.Instance.mapPiecePadding * 0.5f;
-        immovableObject.transform.localPosition = new Vector3(pieceArea.offset.x, topY, 0f);
+        sr.color = MapPieceManager.Instance.color * (isMovable ? movableColor : immovableColor);
     }
+
+    //void SetupImmovableObject()
+    //{
+    //    if (immovableObject == null) return;
+
+    //    immovableObject.SetActive(sr.enabled && !isMovable && !isPinned && !isFlippable);
+    //    if (isMovable || isPinned || isFlippable) return;
+
+    //    Vector2 pieceSize = pieceArea.size;
+    //    Vector3 parentScale = transform.localScale;
+    //    float scaleX = Mathf.Abs(parentScale.x) > 0.0001f ? 1f / parentScale.x : 1f;
+    //    float scaleY = Mathf.Abs(parentScale.y) > 0.0001f ? 1f / parentScale.y : 1f;
+
+    //    float sizeRatio = pieceSize.x * 0.25f;
+    //    immovableObject.transform.localScale = new Vector3(scaleX * sizeRatio, scaleY * sizeRatio, 1f);
+
+    //    // MapPiece 위쪽 경계선으로 이동
+    //    // pieceArea.offset은 콜라이더 중심 오프셋, pieceSize.y * 0.5f는 위쪽 경계까지의 거리
+    //    float topY = pieceArea.offset.y + pieceSize.y * 0.5f + MapPieceManager.Instance.mapPiecePadding * 0.5f;
+    //    immovableObject.transform.localPosition = new Vector3(pieceArea.offset.x, topY, 0f);
+    //}
 
     public void SetupPin(bool pinned, Vector2 pinLocal)
     {

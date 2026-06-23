@@ -10,7 +10,7 @@ public class GameSceneLoader : MonoBehaviour
     [SerializeField] private StageLoadKey key;
     [SerializeField] private string fallbackStageFile = "fallback.json";
 
-    void Awake()
+    void Start()
     {
         string file = ProgressManager.Instance != null
             ? ProgressManager.Instance.GetCurrentStageFile()

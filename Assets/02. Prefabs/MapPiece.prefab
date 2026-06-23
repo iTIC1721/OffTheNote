@@ -49,7 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapPiece
   isMovable: 1
-  immovableObject: {fileID: 796585434214454132}
+  movableColor: {r: 1, g: 1, b: 1, a: 1}
+  immovableColor: {r: 0.9169811, g: 0.9169811, b: 0.9169811, a: 1}
   isPinned: 0
   pinLocalPosition: {x: 0, y: 0}
   pinMarkerPrefab: {fileID: 1390008376439997796, guid: 165e049f63583ee4db8fc2aee76d8d99, type: 3}
@@ -204,7 +205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1276409054562375422
 Transform:
   m_ObjectHideFlags: 0
