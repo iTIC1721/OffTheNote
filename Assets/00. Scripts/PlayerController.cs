@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!isControllable) return;
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetButtonDown("Jump"))
         {
             if (coyoteTimer > 0f)
                 jumpQueued = true;
@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
 
             if (velocity.y < 0)
                 currentGravity *= fallMultiplier;           // 낙하 중 중력 강화
-            else if (velocity.y > 0 && !Input.GetKey(KeyCode.W))
+            else if (velocity.y > 0 && !Input.GetButton("Jump"))
                 currentGravity *= lowJumpMultiplier;        // 점프 키 떼면 빠르게 정점 도달
 
             velocity.y += currentGravity * Time.fixedDeltaTime;
