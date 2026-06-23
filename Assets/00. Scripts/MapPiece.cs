@@ -38,6 +38,7 @@ public class MapPiece : MonoBehaviour
     public bool IsMovable => isMovable;
     public bool IsPinned => isPinned;
     public bool IsFlippable => isFlippable;
+    public bool IsFixed => !isMovable && !isPinned && !isFlippable;
     public void SetMovable(bool movable)
     {
         isMovable = movable;
@@ -762,7 +763,7 @@ public class MapPiece : MonoBehaviour
     /// </summary>
     void RefreshColor()
     {
-        sr.color = MapPieceManager.Instance.color * (isMovable ? movableColor : immovableColor);
+        sr.color = MapPieceManager.Instance.color * (!IsFixed ? movableColor : immovableColor);
     }
 
     //void SetupImmovableObject()
