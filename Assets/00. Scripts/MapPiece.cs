@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GridBrushBase;
 
@@ -684,46 +685,36 @@ public class MapPiece : MonoBehaviour
                 Vector2 platformPos = platform.bounds.center;
                 Vector2 platformSize = platform.bounds.size;
 
-                if (Mathf.Abs(axisDelta.x) > 0.001f || Mathf.Abs(axisDelta.y) > 0.001f)
+                float shrink = 0.1f;
+                Vector2 shrunkSize = new Vector2(
+                    Mathf.Max(0.01f, platformSize.x - shrink),
+                    Mathf.Max(0.01f, platformSize.y - shrink));
+
+                RaycastHit2D[] hits = Physics2D.BoxCastAll(
+                    platformPos,
+                    shrunkSize,
+                    0f,
+                    axisDelta.normalized,
+                    axisDelta.magnitude + 0.01f,
+                    checkMask
+                );
+
+                foreach (var hit in hits)
                 {
-                    float shrink = 0.01f;
-                    Vector2 shrunkSize = new Vector2(
-                        Mathf.Max(0.01f, platformSize.x - shrink),
-                        Mathf.Max(0.01f, platformSize.y - shrink));
+                    if (hit.collider.transform.IsChildOf(transform)) continue;
 
-                    RaycastHit2D[] hits = Physics2D.BoxCastAll(
-                        platformPos,
-                        shrunkSize,
-                        0f,
-                        axisDelta.normalized,
-                        axisDelta.magnitude + 0.01f,
-                        checkMask
-                    );
-
-                    foreach (var hit in hits)
+                    if (hit.distance <= 0f)
                     {
-                        if (hit.collider.transform.IsChildOf(transform)) continue;
-
-                        if (hit.distance <= 0.01f)
-                        {
-                            float dot = axisIdx == 0
-                                ? resolvedDelta.x * hit.normal.x
-                                : resolvedDelta.y * hit.normal.y;
-
-                            if (dot < 0)
-                            {
-                                if (axisIdx == 0) resolvedDelta.x = 0;
-                                else resolvedDelta.y = 0;
-                            }
-                            continue;
-                        }
-
-                        float allowed = Mathf.Max(0, hit.distance - 0.01f);
-                        if (axisIdx == 0 && allowed < Mathf.Abs(resolvedDelta.x))
-                            resolvedDelta.x = allowed * Mathf.Sign(resolvedDelta.x);
-                        else if (axisIdx == 1 && allowed < Mathf.Abs(resolvedDelta.y))
-                            resolvedDelta.y = allowed * Mathf.Sign(resolvedDelta.y);
+                        float dot = Vector2.Dot(axisDelta.normalized, hit.normal);
+                        if (dot >= 0f) continue;
                     }
+
+                    float allowed = Mathf.Max(0f, hit.distance - 0.01f);
+
+                    if (axisIdx == 0 && allowed < Mathf.Abs(resolvedDelta.x))
+                        resolvedDelta.x = allowed * Mathf.Sign(resolvedDelta.x);
+                    else if (axisIdx == 1 && allowed < Mathf.Abs(resolvedDelta.y))
+                        resolvedDelta.y = allowed * Mathf.Sign(resolvedDelta.y);
                 }
 
                 if (axisIdx == 0 && Mathf.Abs(resolvedDelta.x) <= 0.001f) break;
