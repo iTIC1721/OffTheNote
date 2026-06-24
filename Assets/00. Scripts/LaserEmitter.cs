@@ -100,7 +100,7 @@ public class LaserEmitter : MonoBehaviour
             origin + dir * 0.6f, // 발사 장치 자체를 건너뜀
             dir,
             maxLength,
-            LayerMask.GetMask("Platform", "Blocker"));
+            LayerMask.GetMask("Platform"));
 
         currentLength = hit.collider != null
             ? hit.distance

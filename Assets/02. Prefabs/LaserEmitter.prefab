@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaserEmitter
   direction: 0
-  maxLength: 20
+  maxLength: 100
   hitWidth: 0.02
   laserWidth: 0.08
   laserColor: {r: 0.9, g: 0.2, b: 0.1, a: 1}
