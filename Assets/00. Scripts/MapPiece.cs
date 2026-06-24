@@ -122,6 +122,7 @@ public class MapPiece : MonoBehaviour
     // 플립 드래그 감도: 이 픽셀만큼 마우스를 움직이면 180도 플립
     private const float FLIP_DRAG_PIXELS = 200f;
     private const float FLIP_SNAP_SPEED = 8f;
+    private const float FLIP_MAX_DEG_PER_SEC = 360f;
 
     // ── 그리드 스냅 (선택사항) ─────────────────────────────────
     [Header("Grid Snap (0 = off)")]
@@ -486,7 +487,10 @@ public class MapPiece : MonoBehaviour
             bool wouldBeFlipped = normalizedRaw >= 90f && normalizedRaw < 270f;
             if (!IsFlipBlocked(wouldBeFlipped))
             {
-                flipProgress = raw;
+                flipProgress = Mathf.MoveTowards(
+                    flipProgress,
+                    raw,
+                    FLIP_MAX_DEG_PER_SEC * Time.deltaTime);
             }
             else
             {
