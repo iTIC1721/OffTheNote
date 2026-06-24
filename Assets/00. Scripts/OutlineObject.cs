@@ -30,10 +30,9 @@ public class OutlineObject : MonoBehaviour
     [SerializeField] private bool animate = false;
     [SerializeField] private float animSpeed = 0.8f;
 
-    [Header("Highlight")]
-    [SerializeField] private float highlightPulseSpeed = 2.5f;   // 깜빡임 속도
-    [SerializeField] private float highlightPulseMin = 0.75f;   // 최소 밝기 배율
-    [SerializeField] private float highlightPulseMax = 1.0f;    // 최대 밝기 배율
+    private float highlightPulseSpeed = 2.5f;   // 깜빡임 속도
+    private float highlightPulseMin = 0.9f;   // 최소 밝기 배율
+    private float highlightPulseMax = 1.0f;    // 최대 밝기 배율
 
     private GameObject outlineObj;
     private MeshFilter meshFilter;
