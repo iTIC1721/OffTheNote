@@ -22,7 +22,7 @@
                 "x": 5.0,
                 "y": 10.0
             },
-            "isMovable": true,
+            "isMovable": false,
             "isVisible": true,
             "isPinned": false,
             "pinLocalPosition": {
