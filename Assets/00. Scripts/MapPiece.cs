@@ -226,7 +226,7 @@ public class MapPiece : MonoBehaviour
             // 가장 가까운 90도
             float snapped = Mathf.Round(currentAngle / 90f) * 90f;
 
-            if (!IsRotationBlocked(snapped))
+            if (!IsRotationPathBlocked(dragStartAngle, snapped))
             {
                 targetAngle = snapped;
             }
@@ -234,11 +234,11 @@ public class MapPiece : MonoBehaviour
             {
                 // 충돌 시 반대쪽(이전) 90도로 스냅
                 // snapped가 currentAngle보다 크면 반시계, 작으면 시계 방향으로 되돌림
-                float fallback = snapped > currentAngle
+                float fallback = Mathf.DeltaAngle(currentAngle, snapped) > 0f
                     ? snapped - 90f
                     : snapped + 90f;
 
-                if (!IsRotationBlocked(fallback))
+                if (!IsRotationPathBlocked(dragStartAngle, fallback))
                     targetAngle = fallback;
                 else
                     targetAngle = currentAngle; // 양쪽 다 막히면 현재 유지
@@ -413,6 +413,22 @@ public class MapPiece : MonoBehaviour
         transform.rotation = savedRot;
 
         return blocked;
+    }
+
+    bool IsRotationPathBlocked(float fromAngle, float toAngle, float stepDeg = 5f)
+    {
+        float delta = Mathf.DeltaAngle(fromAngle, toAngle);
+        float sign = Mathf.Sign(delta);
+        float travelled = 0f;
+
+        while (Mathf.Abs(travelled) < Mathf.Abs(delta))
+        {
+            float step = sign * Mathf.Min(stepDeg, Mathf.Abs(delta) - Mathf.Abs(travelled));
+            travelled += step;
+            float angle = fromAngle + travelled;
+            if (IsRotationBlocked(angle)) return true;
+        }
+        return false;
     }
 
     void ApplyPinRotation()
