@@ -1,0 +1,648 @@
+{
+    "stageName": "New Stage",
+    "cameraHeight": 26.0,
+    "spawnPieceId": "piece_0",
+    "spawnLocalPosition": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "goalPieceId": "piece_0_copy",
+    "goalLocalPosition": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "mapPieces": [
+        {
+            "id": "piece_0",
+            "position": {
+                "x": -17.5,
+                "y": 0.0
+            },
+            "colliderSize": {
+                "x": 5.0,
+                "y": 5.0
+            },
+            "isMovable": false,
+            "isVisible": true,
+            "isPinned": false,
+            "pinLocalPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "isFlippable": false,
+            "flipAxis": "Y",
+            "startFlipped": false,
+            "pieceObjects": [
+                {
+                    "id": "Platform_0",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 0.0,
+                        "y": -2.0
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 5.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 0
+                    }
+                }
+            ]
+        },
+        {
+            "id": "piece_0_copy",
+            "position": {
+                "x": 17.5,
+                "y": 0.0
+            },
+            "colliderSize": {
+                "x": 5.0,
+                "y": 5.0
+            },
+            "isMovable": false,
+            "isVisible": true,
+            "isPinned": false,
+            "pinLocalPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "isFlippable": false,
+            "flipAxis": "Y",
+            "startFlipped": false,
+            "pieceObjects": []
+        },
+        {
+            "id": "piece_3",
+            "position": {
+                "x": -5.0,
+                "y": 0.0
+            },
+            "colliderSize": {
+                "x": 15.0,
+                "y": 15.0
+            },
+            "isMovable": true,
+            "isVisible": true,
+            "isPinned": false,
+            "pinLocalPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "isFlippable": false,
+            "flipAxis": "Y",
+            "startFlipped": false,
+            "pieceObjects": [
+                {
+                    "id": "Platform_0",
+                    "type": 0,
+                    "localPosition": {
+                        "x": -5.0,
+                        "y": -3.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 5.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 0
+                    }
+                },
+                {
+                    "id": "LaserEmitter_1",
+                    "type": 6,
+                    "localPosition": {
+                        "x": 0.0,
+                        "y": 6.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 3
+                    }
+                },
+                {
+                    "id": "Platform_0_copy",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 5.0,
+                        "y": -3.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 5.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 0
+                    }
+                },
+                {
+                    "id": "Blocker_3",
+                    "type": 3,
+                    "localPosition": {
+                        "x": -5.0,
+                        "y": 3.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 5.0,
+                            "y": 1.0
+                        }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 0
+                    }
+                }
+            ]
+        },
+        {
+            "id": "piece_3_copy",
+            "position": {
+                "x": 5.0,
+                "y": 0.0
+            },
+            "colliderSize": {
+                "x": 15.0,
+                "y": 15.0
+            },
+            "isMovable": true,
+            "isVisible": true,
+            "isPinned": false,
+            "pinLocalPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "isFlippable": false,
+            "flipAxis": "Y",
+            "startFlipped": false,
+            "pieceObjects": [
+                {
+                    "id": "LaserEmitter_1",
+                    "type": 6,
+                    "localPosition": {
+                        "x": 0.0,
+                        "y": -6.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 2
+                    }
+                },
+                {
+                    "id": "Platform_0_copy",
+                    "type": 0,
+                    "localPosition": {
+                        "x": 5.0,
+                        "y": -3.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 5.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 0
+                    }
+                },
+                {
+                    "id": "Platform_0_copy_copy",
+                    "type": 0,
+                    "localPosition": {
+                        "x": -5.0,
+                        "y": 3.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 5.0,
+                            "y": 1.0
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 0
+                    }
+                },
+                {
+                    "id": "Blocker_3",
+                    "type": 3,
+                    "localPosition": {
+                        "x": 5.0,
+                        "y": 3.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 5.0,
+                            "y": 1.0
+                        }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 0
+                    }
+                }
+            ]
+        },
+        {
+            "id": "piece_4",
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "colliderSize": {
+                "x": 50.0,
+                "y": 10.0
+            },
+            "isMovable": false,
+            "isVisible": false,
+            "isPinned": false,
+            "pinLocalPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "isFlippable": false,
+            "flipAxis": "Y",
+            "startFlipped": false,
+            "pieceObjects": [
+                {
+                    "id": "Blocker_0",
+                    "type": 3,
+                    "localPosition": {
+                        "x": 0.0,
+                        "y": -4.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 40.0,
+                            "y": 1.0
+                        }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 0
+                    }
+                },
+                {
+                    "id": "Blocker_0_copy",
+                    "type": 3,
+                    "localPosition": {
+                        "x": 0.0,
+                        "y": 4.5
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 40.0,
+                            "y": 1.0
+                        }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 0
+                    }
+                }
+            ]
+        }
+    ],
+    "globalObjects": []
+}
