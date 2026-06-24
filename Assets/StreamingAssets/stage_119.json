@@ -1,6 +1,6 @@
 {
     "stageName": "New Stage",
-    "cameraHeight": 30.0,
+    "cameraHeight": 26.0,
     "spawnPieceId": "piece_0",
     "spawnLocalPosition": {
         "x": 0.0,
