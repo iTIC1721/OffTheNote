@@ -171,6 +171,7 @@ public class MapPiece : MonoBehaviour
     {
         // 조작 시작 즉시 이 조각을 최상위로 올린다
         MapPieceManager.Instance?.RefreshSortingOrders(this);
+        SetChildOutlineHighlight(true);
 
         if (isPinned)
         {
@@ -219,6 +220,8 @@ public class MapPiece : MonoBehaviour
 
     public void StopDrag()
     {
+        bool wasActive = isPinDragging || isFlipDragging || isDragging;
+
         if (isPinDragging)
         {
             isPinDragging = false;
@@ -244,6 +247,7 @@ public class MapPiece : MonoBehaviour
                     targetAngle = currentAngle; // 양쪽 다 막히면 현재 유지
             }
             MapPieceManager.Instance?.RefreshSortingOrders(null);
+            SetChildOutlineHighlight(false);
             return;
         }
 
@@ -292,6 +296,7 @@ public class MapPiece : MonoBehaviour
         isDragging = false;
         rb.linearVelocity = Vector2.zero;
         MapPieceManager.Instance?.RefreshSortingOrders(null);
+        SetChildOutlineHighlight(false);
     }
 
     // ── 매 프레임마다 회전 업데이트 ──────────────────────
@@ -594,6 +599,7 @@ public class MapPiece : MonoBehaviour
         }
 
         MapPieceManager.Instance?.SetFlipping(false);
+        SetChildOutlineHighlight(false);
     }
 
     /// <summary>
@@ -835,6 +841,16 @@ public class MapPiece : MonoBehaviour
             flipTargetProgress = 0f;
             isFlipped = false;
             ApplyFlip();
+        }
+    }
+
+    void SetChildOutlineHighlight(bool highlight)
+    {
+        GameObject playerGO = MapPieceManager.Instance?.GetPlayerIfOnPiece(this)?.gameObject;
+        foreach (var outline in GetComponentsInChildren<OutlineObject>())
+        {
+            if (playerGO != null && outline.transform.IsChildOf(playerGO.transform)) continue;
+            outline.SetHighlight(highlight);
         }
     }
 

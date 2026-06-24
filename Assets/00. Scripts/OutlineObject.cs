@@ -30,12 +30,19 @@ public class OutlineObject : MonoBehaviour
     [SerializeField] private bool animate = false;
     [SerializeField] private float animSpeed = 0.8f;
 
+    [Header("Highlight")]
+    [SerializeField] private float highlightPulseSpeed = 2.5f;   // 깜빡임 속도
+    [SerializeField] private float highlightPulseMin = 0.75f;   // 최소 밝기 배율
+    [SerializeField] private float highlightPulseMax = 1.0f;    // 최대 밝기 배율
+
     private GameObject outlineObj;
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
     private SpriteRenderer mainSr;
     private Mesh outlineMesh;
     private float timeOffset;
+
+    private bool isHighlighted = false;
 
     // 단색 머티리얼 캐시
     private Material outlineMaterial;
@@ -45,6 +52,7 @@ public class OutlineObject : MonoBehaviour
 
     void OnEnable()
     {
+        isHighlighted = false;
         mainSr = GetComponent<SpriteRenderer>();
         timeOffset = Random.Range(0f, 100f); // 오브젝트마다 다른 노이즈 패턴
         ownerPiece = GetComponentInParent<MapPiece>(); // 속한 MapPiece 탐색 (flip 상태 참조용)
@@ -59,6 +67,15 @@ public class OutlineObject : MonoBehaviour
     public void RefreshOwnerPiece()
     {
         ownerPiece = GetComponentInParent<MapPiece>();
+    }
+
+    /// <summary>
+    /// MapPiece가 선택/조작 중일 때 true, 조작 종료 시 false.
+    /// 플레이어 소속 OutlineObject는 MapPiece에서 필터링하므로 여기선 단순 토글만 한다.
+    /// </summary>
+    public void SetHighlight(bool highlight)
+    {
+        isHighlighted = highlight;
     }
 
     void OnDisable()
@@ -118,6 +135,19 @@ public class OutlineObject : MonoBehaviour
 
         if (animate || Application.isEditor)
             RebuildMesh();
+
+        if (outlineMaterial != null)
+        {
+            if (isHighlighted)
+            {
+                float pulse = (Mathf.Sin(Time.time * highlightPulseSpeed * Mathf.PI) + 1f) * 0.5f;
+                outlineMaterial.color = Color.Lerp(outlineColor * highlightPulseMin, outlineColor, pulse);
+            }
+            else
+            {
+                outlineMaterial.color = outlineColor;
+            }
+        }
     }
 
     /// <summary>
@@ -220,8 +250,8 @@ public class OutlineObject : MonoBehaviour
             AddStrokesToMesh(localBounds, w, h, center);
         }
 
-        if (outlineMaterial != null)
-            outlineMaterial.color = outlineColor;
+        //if (outlineMaterial != null)
+        //    outlineMaterial.color = outlineColor;
     }
 
     void AddStrokesToMesh(Bounds b, float w, float h, Vector2 center)
