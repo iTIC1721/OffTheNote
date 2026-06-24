@@ -113,6 +113,7 @@ public class MapPiece : MonoBehaviour
     private Vector2 flipDragStartMousePos = Vector2.zero;
     private bool isFlipDragging = false;
     private bool isFlipped = false;        // 현재 뒤집힌 상태 여부
+    private float flipDragReferenceDistance = 1f;
 
     // 플립 중 플레이어 추적
     // 플레이어를 분리하지 않고 로컬 좌표를 flip에 맞춰 매 프레임 보정
@@ -191,6 +192,11 @@ public class MapPiece : MonoBehaviour
             isFlipDragging = true;
             flipDragStart = flipProgress;
             flipDragStartMousePos = GetMouseWorldPos();
+
+            float axisOffset = flipAxis == FlipAxis.Y
+                ? flipDragStartMousePos.x - transform.position.x
+                : flipDragStartMousePos.y - transform.position.y;
+            flipDragReferenceDistance = Mathf.Max(Mathf.Abs(axisOffset), 0.5f);
 
             // Platform 콜라이더 비활성화
             // → 조각 위에 있던 플레이어는 부모-자식 관계로 scale/position이 자동 전파됨
@@ -470,8 +476,8 @@ public class MapPiece : MonoBehaviour
             float dragAmount = flipAxis == FlipAxis.X ? -mouseDelta.y : mouseDelta.x;
 
             // 월드 단위 → 플립 각도 변환 (FLIP_DRAG_PIXELS 월드유닛 = 180도)
-            float worldUnitsPerFlip = mainCam.orthographicSize * 2f * (FLIP_DRAG_PIXELS / Screen.height);
-            float deltaAngle = (dragAmount / worldUnitsPerFlip) * 180f;
+            float worldUnitsPerHalfFlip = flipDragReferenceDistance * Mathf.PI;
+            float deltaAngle = (dragAmount / worldUnitsPerHalfFlip) * 180f;
 
             float raw = flipDragStart + deltaAngle;
 
