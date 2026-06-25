@@ -25,8 +25,11 @@ MonoBehaviour:
   - world_00/piece_01.json
   - world_00/piece_02.json
   - world_00/piece_03.json
-  - world_00/hazard_00.json
-  - world_00/hazard_01.json
-  - world_00/hazard_02.json
-  - world_00/hazard_03.json
-  - world_00/hazard_04.json
+  - stage_104.json
+  - stage_130.json
+  - stage_106.json
+  - stage_105.json
+  - stage_107.json
+  - stage_128.json
+  - stage_129.json
+  - stage_121.json
