@@ -42,12 +42,14 @@ public class MapPieceSelector : MonoBehaviour
             if (candidates.Count == 0) return;
 
             draggingPiece = GetTopPriority(candidates);
-            draggingPiece.StartDrag();
+            draggingPiece.StartDrag();            
+            SetPlayerControllable(false);
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             draggingPiece?.StopDrag();
+            SetPlayerControllable(true);
             draggingPiece = null;
         }
     }
@@ -67,6 +69,13 @@ public class MapPieceSelector : MonoBehaviour
             }
         }
         return top;
+    }
+
+    void SetPlayerControllable(bool controllable)
+    {
+        var player = MapPieceManager.Instance?.GetPlayer();
+        if (player != null)
+            player.SetControllable(controllable);
     }
 
     public void StopAllDragging()

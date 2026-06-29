@@ -22,6 +22,7 @@ public class MapPieceManager : MonoBehaviour
     public Sprite immovableSprite;
 
     public MapPiece CurrentPiece => currentPiece;
+    public PlayerController GetPlayer() => player;
 
     private MapPiece currentPiece;
     private Transform sceneRoot; // 어느 조각에도 없을 때 부모
