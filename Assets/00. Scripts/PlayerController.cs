@@ -249,7 +249,16 @@ public class PlayerController : MonoBehaviour
             if (dist.isOverlapped)
             {
                 Vector2 correction = dist.normal * dist.distance;
-                correction.x = 0;
+
+                if (Mathf.Abs(dist.normal.x) > Mathf.Abs(dist.normal.y))
+                {
+                    // 수평 끼임: 깊이 충분할 때만 X 보정 (얕은 벽 접촉은 무시)
+                    if (Mathf.Abs(dist.distance) < 0.05f) continue;
+                    correction.y = 0;
+                }
+                else
+                    correction.x = 0;
+
                 transform.position += (Vector3)correction;
 
                 if (dist.normal.y > 0.9f && velocity.y < 0)
