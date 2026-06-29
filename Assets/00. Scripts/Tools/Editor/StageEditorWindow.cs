@@ -51,6 +51,7 @@ public class StageEditorWindow : EditorWindow
     private int dragPlatformIndex = -1;
     private Vector2 dragStartWorld;
     private Vector2 dragStartObjPos;
+    private bool didDrag = false;
 
     [MenuItem("Tools/Stage Editor")]
     public static void OpenWindow()
@@ -923,11 +924,15 @@ public class StageEditorWindow : EditorWindow
         { isPanning = false; e.Use(); }
 
         if (e.type == EventType.MouseDown && e.button == 0 && !e.alt)
-        { TryStartDrag(ViewportToWorld(e.mousePosition, rect)); e.Use(); }
+        { didDrag = false; TryStartDrag(ViewportToWorld(e.mousePosition, rect)); e.Use(); }
         if (e.type == EventType.MouseDrag && e.button == 0 && dragTarget != DragTarget.None)
-        { ApplyDrag(dragStartObjPos + (ViewportToWorld(e.mousePosition, rect) - dragStartWorld)); e.Use(); Repaint(); }
+        { didDrag = true; ApplyDrag(dragStartObjPos + (ViewportToWorld(e.mousePosition, rect) - dragStartWorld)); e.Use(); Repaint(); }
         if (e.type == EventType.MouseUp && e.button == 0)
-        { dragTarget = DragTarget.None; e.Use(); }
+        {
+            if (!didDrag && dragTarget == DragTarget.Piece)
+                TryCycleSelection(ViewportToWorld(e.mousePosition, rect));
+            dragTarget = DragTarget.None; e.Use();
+        }
     }
 
     void TryStartDrag(Vector2 wm)
@@ -992,17 +997,55 @@ public class StageEditorWindow : EditorWindow
                 }
             }
         }
+        // ── MapPiece 드래그 준비 ──
+        // 현재 선택 조각이 클릭 위치에 있으면 선택 변경 없이 드래그 준비
+        // 없으면 즉시 첫 번째 히트 조각으로 선택 변경
+        var hitPiecesDown = new List<int>();
         for (int i = 0; i < stageData.mapPieces.Count; i++)
         {
             var piece = stageData.mapPieces[i];
             if (InRect(wm, piece.position.ToVector2(), piece.colliderSize.ToVector2()))
-            {
-                RecordUndo();
+                hitPiecesDown.Add(i);
+        }
 
-                dragTarget = DragTarget.Piece; dragPieceIndex = i;
-                dragStartWorld = wm; dragStartObjPos = piece.position.ToVector2();
-                selectedPieceIndex = i; selectedPlatformIndex = -1; return;
-            }
+        if (hitPiecesDown.Count == 0) return;
+
+        bool currentIsHit = hitPiecesDown.Contains(selectedPieceIndex) && selectedPlatformIndex < 0;
+        int dragIdx = currentIsHit ? selectedPieceIndex : hitPiecesDown[0];
+
+        if (!currentIsHit)
+        {
+            // 새 조각 즉시 선택
+            selectedPieceIndex = dragIdx;
+            selectedPlatformIndex = -1;
+        }
+
+        RecordUndo();
+        dragTarget = DragTarget.Piece; dragPieceIndex = dragIdx;
+        dragStartWorld = wm; dragStartObjPos = stageData.mapPieces[dragIdx].position.ToVector2();
+    }
+
+    // MouseUp 시 드래그 없이 클릭만 한 경우 → 순환 선택
+    void TryCycleSelection(Vector2 wm)
+    {
+        var hitPieces = new List<int>();
+        for (int i = 0; i < stageData.mapPieces.Count; i++)
+        {
+            var piece = stageData.mapPieces[i];
+            if (InRect(wm, piece.position.ToVector2(), piece.colliderSize.ToVector2()))
+                hitPieces.Add(i);
+        }
+
+        if (hitPieces.Count <= 1) return; // 단독 히트면 순환 불필요
+
+        // 현재 선택이 히트 목록에 있으면 다음으로 순환
+        int posInHit = hitPieces.IndexOf(selectedPieceIndex);
+        if (posInHit >= 0)
+        {
+            int nextIdx = hitPieces[(posInHit + 1) % hitPieces.Count];
+            selectedPieceIndex = nextIdx;
+            selectedPlatformIndex = -1;
+            Repaint();
         }
     }
 
