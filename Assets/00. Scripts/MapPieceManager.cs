@@ -245,5 +245,26 @@ public class MapPieceManager : MonoBehaviour
 
         // 다른 맵 조각과의 겹침을 매 프레임 해소
         player.ResolveExternalOverlap(currentPiece);
+        CheckPlayerSquish();
+    }
+
+    void CheckPlayerSquish()
+    {
+        BoxCollider2D playerCol = player.Col;
+        Collider2D[] overlaps = Physics2D.OverlapBoxAll(
+            player.transform.position, playerCol.size, 0f,
+            LayerMask.GetMask("Platform"));
+
+        float totalOverlapDepth = 0f;
+        foreach (var overlap in overlaps)
+        {
+            ColliderDistance2D dist = Physics2D.Distance(playerCol, overlap);
+            if (dist.isOverlapped)
+                totalOverlapDepth += Mathf.Abs(dist.distance);
+        }
+
+        // 겹침 깊이가 임계값을 초과하면 리스폰
+        if (totalOverlapDepth > 0.3f)
+            player.Respawn();
     }
 }
