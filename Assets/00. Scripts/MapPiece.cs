@@ -34,6 +34,7 @@ public class MapPiece : MonoBehaviour
     [Header("Flip")]
     [SerializeField] private bool isFlippable = false;
     [SerializeField] private FlipAxis flipAxis = FlipAxis.X; // X축 뒤집기(상하) or Y축 뒤집기(좌우)
+    [SerializeField] private GameObject flipMarkerPrefab; // 양방향 화살표 프리팹
 
     public bool IsMovable => isMovable;
     public bool IsPinned => isPinned;
@@ -114,6 +115,7 @@ public class MapPiece : MonoBehaviour
     private bool isFlipDragging = false;
     private bool isFlipped = false;        // 현재 뒤집힌 상태 여부
     private float flipDragReferenceDistance = 1f;
+    private GameObject flipMarker;
 
     // 플립 중 플레이어 추적
     // 플레이어를 분리하지 않고 로컬 좌표를 flip에 맞춰 매 프레임 보정
@@ -165,6 +167,9 @@ public class MapPiece : MonoBehaviour
 
         if (isPinned)
             SetupPin(isPinned, pinLocalPosition);
+
+        if (isFlippable)
+            SetupFlipMarker();
     }
 
     // ── 마우스 입력 ────────────────────────────────────────────
@@ -851,6 +856,18 @@ public class MapPiece : MonoBehaviour
             flipTargetProgress = 0f;
             isFlipped = false;
             ApplyFlip();
+        }
+    }
+
+    void SetupFlipMarker()
+    {
+        if (flipMarker != null) DestroyImmediate(flipMarker);
+
+        if (isFlippable && flipMarkerPrefab != null)
+        {
+            flipMarker = Instantiate(flipMarkerPrefab, transform);
+            flipMarker.transform.localPosition = Vector3.zero;
+            flipMarker.transform.localRotation = Quaternion.Euler(0f, 0f, flipAxis == FlipAxis.X ? 90f : 0f);
         }
     }
 

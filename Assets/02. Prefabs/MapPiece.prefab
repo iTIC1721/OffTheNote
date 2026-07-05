@@ -56,6 +56,7 @@ MonoBehaviour:
   pinMarkerPrefab: {fileID: 1390008376439997796, guid: 165e049f63583ee4db8fc2aee76d8d99, type: 3}
   isFlippable: 0
   flipAxis: 0
+  flipMarkerPrefab: {fileID: 1390008376439997796, guid: 2bef95c7738148f4dba335c107ff2ac7, type: 3}
   snapSize: 0
 --- !u!212 &476514621640023717
 SpriteRenderer:
