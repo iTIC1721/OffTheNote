@@ -18,8 +18,14 @@ MonoBehaviour:
   displayShortDesc: Desc
   displayIcon: {fileID: 21300000, guid: 9234405fc4a7b63498647d75679c62ca, type: 3}
   stageFiles:
-  - stage_11.json
-  - stage_01.json
-  - stage_02.json
-  - stage_03.json
-  - stage_21.json
+  - world_01/pin_01.json
+  - world_01/pin_02.json
+  - stage_101.json
+  - stage_102.json
+  - stage_109.json
+  - stage_103.json
+  - stage_111.json
+  - stage_110.json
+  - stage_112.json
+  - stage_114.json
+  - stage_115.json
