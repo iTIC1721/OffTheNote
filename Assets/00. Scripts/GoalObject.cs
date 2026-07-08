@@ -18,7 +18,7 @@ public class GoalObject : MonoBehaviour
     [SerializeField] private float fadeInDuration = 0.5f;
 
     [Header("Scene")]
-    [SerializeField] private string selectSceneName = "StageSelectScene";
+    [SerializeField] private string selectSceneName = "StageSelect";
 
     private bool triggered = false;
     private PlayerController player;

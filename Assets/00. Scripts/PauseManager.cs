@@ -8,6 +8,10 @@ public class PauseManager : MonoBehaviour
 
     [SerializeField] private GameObject pausePanel;
 
+    [SerializeField] private string selectSceneName = "StageSelect";
+    [SerializeField] private float fadeOutDuration = 0.75f;
+    [SerializeField] private float fadeInDuration = 1f;
+
     void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -57,6 +61,12 @@ public class PauseManager : MonoBehaviour
         ProgressManager.Instance?.RequestWorldFocus();
         IsPaused = false;
         Time.timeScale = 1f;
-        SceneManager.LoadScene("StageSelect");
+
+        //SceneManager.LoadScene("StageSelect");
+        FadeManager.Instance.FadeAndLoadScene(
+            sceneName: selectSceneName,
+            fadeOutDuration: fadeOutDuration,
+            fadeInDuration: fadeInDuration
+        );
     }
 }
