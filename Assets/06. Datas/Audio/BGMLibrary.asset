@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4dff8b23f0738f40af895e2aa8ea5a6, type: 3}
+  m_Name: BGMLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::AudioLibrary
+  entries:
+  - key: menu
+    clip: {fileID: 8300000, guid: 2129463b7282c5b429557e2d3c09f05d, type: 3}
+  - key: world0
+    clip: {fileID: 8300000, guid: f19981602536c754faceab8fa364e750, type: 3}
+  - key: world1
+    clip: {fileID: 8300000, guid: 5a7700db17a058f419a593a7b7edb049, type: 3}
+  - key: world2
+    clip: {fileID: 8300000, guid: 2ee609f06b76a7643a89a3cadb4f7d61, type: 3}
