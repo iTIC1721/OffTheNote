@@ -119,6 +119,8 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
+            AudioManager.Instance.PlaySFX("jump");
+
             if (coyoteTimer > 0f)
                 jumpQueued = true;
             else if (!isGrounded && hasDoubleJump && !doubleJumpUsed)
@@ -319,6 +321,8 @@ public class PlayerController : MonoBehaviour
         // 사망 위치에서 이펙트 재생
         if (deathEffect != null && enableDeathEffect)
             deathEffect.Play(ClampToViewport(transform.position));
+
+        AudioManager.Instance.PlaySFX("death");
 
         // 스폰 위치 지정
         Vector2 pos = spawnPointTransform != null

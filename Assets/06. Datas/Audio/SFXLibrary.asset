@@ -12,4 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4dff8b23f0738f40af895e2aa8ea5a6, type: 3}
   m_Name: SFXLibrary
   m_EditorClassIdentifier: Assembly-CSharp::AudioLibrary
-  entries: []
+  entries:
+  - key: jump
+    clip: {fileID: 8300000, guid: b11f29f04e728d14589d7674e5cee4b0, type: 3}
+  - key: death
+    clip: {fileID: 8300000, guid: a369fe4bb30c9a941ada32d0d9e65bb5, type: 3}
+  - key: click
+    clip: {fileID: 8300000, guid: 2528853df1799974887876b01aae16b4, type: 3}
+  - key: enter
+    clip: {fileID: 8300000, guid: 78101ae49f539f0439c22fc5ea5a6edc, type: 3}
+  - key: enter2
+    clip: {fileID: 8300000, guid: 0ee00b17660b94d47869fdcdaa7c74a2, type: 3}
+  - key: enter3
+    clip: {fileID: 8300000, guid: 061abdcd5c62e61439d1f2e3f8551873, type: 3}

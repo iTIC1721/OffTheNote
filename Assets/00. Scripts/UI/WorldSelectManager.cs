@@ -433,6 +433,7 @@ public class WorldSelectManager : MonoBehaviour
         ProgressManager.Instance?.StartWorld(world, stageIndex);
 
         AudioManager.Instance.StopBGM(fadeOutDuration);
+        AudioManager.Instance.PlaySFX("enter3");
 
         //SceneManager.LoadScene(gameSceneName);
         FadeManager.Instance.FadeAndLoadScene(
@@ -448,6 +449,8 @@ public class WorldSelectManager : MonoBehaviour
         isTransitioning = true;
         float elapsed = 0f;
         float halfTime = transitionDuration * 0.5f;
+
+        AudioManager.Instance.PlaySFX("enter");
 
         // World 패널 왼쪽으로 접히며 사라짐
         while (elapsed < halfTime)
@@ -474,6 +477,8 @@ public class WorldSelectManager : MonoBehaviour
         isTransitioning = true;
         float elapsed = 0f;
         float halfTime = transitionDuration * 0.5f;
+
+        AudioManager.Instance.PlaySFX("enter2");
 
         worldPanelRT.gameObject.SetActive(true);
         worldPanelRT.localScale = new Vector3(0f, 1f, 1f);
