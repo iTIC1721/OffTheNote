@@ -1907,6 +1907,7 @@ GameObject:
   - component: {fileID: 763086835}
   - component: {fileID: 763086836}
   - component: {fileID: 763086837}
+  - component: {fileID: 763086838}
   m_Layer: 5
   m_Name: PrevCard
   m_TagString: Untagged
@@ -2064,6 +2065,20 @@ MonoBehaviour:
   worldProgressBar: {fileID: 0}
   worldIcon: {fileID: 1671781512}
   lockOverlay: {fileID: 0}
+--- !u!114 &763086838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763086830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a724c14c9256b9438b344a16e8204ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  clickSfxName: click
+  volumeScale: 0.5
 --- !u!1 &764941205
 GameObject:
   m_ObjectHideFlags: 0
@@ -2751,6 +2766,7 @@ GameObject:
   - component: {fileID: 1242167632}
   - component: {fileID: 1242167631}
   - component: {fileID: 1242167630}
+  - component: {fileID: 1242167634}
   m_Layer: 5
   m_Name: NextButton
   m_TagString: Untagged
@@ -2875,6 +2891,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1242167628}
   m_CullTransparentMesh: 1
+--- !u!114 &1242167634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242167628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a724c14c9256b9438b344a16e8204ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  clickSfxName: click
+  volumeScale: 0.5
 --- !u!1 &1266388407
 GameObject:
   m_ObjectHideFlags: 0
@@ -5045,6 +5075,7 @@ GameObject:
   - component: {fileID: 1777677958}
   - component: {fileID: 1777677957}
   - component: {fileID: 1777677960}
+  - component: {fileID: 1777677961}
   m_Layer: 5
   m_Name: PrevButton
   m_TagString: Untagged
@@ -5169,6 +5200,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 3, y: -3}
   m_UseGraphicAlpha: 1
+--- !u!114 &1777677961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777677955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a724c14c9256b9438b344a16e8204ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  clickSfxName: click
+  volumeScale: 0.5
 --- !u!1 &1850804665
 GameObject:
   m_ObjectHideFlags: 0
@@ -5994,6 +6039,7 @@ GameObject:
   - component: {fileID: 2003822439}
   - component: {fileID: 2003822438}
   - component: {fileID: 2003822443}
+  - component: {fileID: 2003822444}
   m_Layer: 5
   m_Name: NextCard
   m_TagString: Untagged
@@ -6151,6 +6197,20 @@ MonoBehaviour:
   worldProgressBar: {fileID: 0}
   worldIcon: {fileID: 894315389}
   lockOverlay: {fileID: 0}
+--- !u!114 &2003822444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003822436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a724c14c9256b9438b344a16e8204ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  clickSfxName: click
+  volumeScale: 0.5
 --- !u!1 &2093981372
 GameObject:
   m_ObjectHideFlags: 0

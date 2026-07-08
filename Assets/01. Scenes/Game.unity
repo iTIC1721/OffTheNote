@@ -582,6 +582,7 @@ GameObject:
   - component: {fileID: 812884067}
   - component: {fileID: 812884066}
   - component: {fileID: 812884069}
+  - component: {fileID: 812884070}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
@@ -719,6 +720,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &812884070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812884064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a724c14c9256b9438b344a16e8204ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  clickSfxName: click
+  volumeScale: 0.5
 --- !u!1 &920935428
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,6 +1153,7 @@ GameObject:
   - component: {fileID: 1088482903}
   - component: {fileID: 1088482902}
   - component: {fileID: 1088482901}
+  - component: {fileID: 1088482905}
   m_Layer: 5
   m_Name: 'BackButton '
   m_TagString: Untagged
@@ -1275,6 +1291,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088482899}
   m_CullTransparentMesh: 1
+--- !u!114 &1088482905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088482899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a724c14c9256b9438b344a16e8204ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  clickSfxName: click
+  volumeScale: 0.5
 --- !u!1 &1403431208
 GameObject:
   m_ObjectHideFlags: 0
