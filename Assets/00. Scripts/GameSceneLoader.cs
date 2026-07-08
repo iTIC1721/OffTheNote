@@ -21,6 +21,12 @@ public class GameSceneLoader : MonoBehaviour
 
         // 사용 후 삭제
         //PlayerPrefs.DeleteKey(key.ToString());
+
+        if (AudioManager.Instance != null)
+        {
+            var world = ProgressManager.Instance.CurrentWorld;
+            AudioManager.Instance.PlayBGMWithFade(world.bgm);
+        }
     }
 }
 

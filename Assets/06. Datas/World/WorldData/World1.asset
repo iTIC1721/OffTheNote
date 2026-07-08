@@ -17,6 +17,7 @@ MonoBehaviour:
   displayDesc: World 1 Desc
   displayShortDesc: Desc
   displayIcon: {fileID: 21300000, guid: 9234405fc4a7b63498647d75679c62ca, type: 3}
+  bgm: world1
   stageFiles:
   - world_01/pin_01.json
   - world_01/pin_02.json

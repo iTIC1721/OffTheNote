@@ -79,6 +79,9 @@ public class WorldSelectManager : MonoBehaviour
         RefreshCards();
 
         ApplyPendingWorldFocus();
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayBGMWithFade("menu");
     }
 
     /// <summary>
