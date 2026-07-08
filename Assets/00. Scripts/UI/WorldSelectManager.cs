@@ -49,7 +49,10 @@ public class WorldSelectManager : MonoBehaviour
     [SerializeField] private RectTransform worldPanelRT;
     [SerializeField] private RectTransform stagePanelRT;
     [SerializeField] private float transitionDuration = 0.3f;
-    
+
+    [SerializeField] private float fadeOutDuration = 0.4f;
+    [SerializeField] private float fadeInDuration = 0.5f;
+
     private bool isTransitioning = false;
 
     private WorldData selectedWorld;
@@ -428,7 +431,15 @@ public class WorldSelectManager : MonoBehaviour
     void StartStage(WorldData world, int stageIndex)
     {
         ProgressManager.Instance?.StartWorld(world, stageIndex);
-        SceneManager.LoadScene(gameSceneName);
+
+        AudioManager.Instance.StopBGM(fadeOutDuration);
+
+        //SceneManager.LoadScene(gameSceneName);
+        FadeManager.Instance.FadeAndLoadScene(
+            sceneName: gameSceneName,
+            fadeOutDuration: fadeOutDuration,
+            fadeInDuration: fadeInDuration
+        );
     }
 
     // ── 트랜지션 ─────────────────────────────────────────

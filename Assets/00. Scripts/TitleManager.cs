@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 public class TitleManager : MonoBehaviour
 {
     [SerializeField] private string stageSelectSceneName = "StageSelect";
+    [SerializeField] private float fadeOutDuration = 0.4f;
+    [SerializeField] private float fadeInDuration = 0.5f;
 
     private void Start()
     {
@@ -13,6 +15,10 @@ public class TitleManager : MonoBehaviour
 
     public void MoveToWorldSelect()
     {
-        SceneManager.LoadScene(stageSelectSceneName);
+        FadeManager.Instance.FadeAndLoadScene(
+            sceneName: stageSelectSceneName,
+            fadeOutDuration: fadeOutDuration,
+            fadeInDuration: fadeInDuration
+        );
     }
 }

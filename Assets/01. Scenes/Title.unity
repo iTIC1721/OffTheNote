@@ -344,6 +344,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleManager
   stageSelectSceneName: StageSelect
+  fadeOutDuration: 0.75
+  fadeInDuration: 1
 --- !u!1 &272402386
 GameObject:
   m_ObjectHideFlags: 0
