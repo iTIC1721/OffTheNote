@@ -1,6 +1,4 @@
-using UnityEditor.Toolbars;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
 {
