@@ -17,7 +17,8 @@ public class WorldSelectManager : MonoBehaviour
     public WorldListData WorldList => ProgressManager.Instance?.WorldList;
 
     [Header("Scene")]
-    [SerializeField] private string gameSceneName = "GameScene";
+    [SerializeField] private string titleSceneName = "Title";
+    [SerializeField] private string gameSceneName = "Game";
 
     [Header("World UI")]
     [SerializeField] private WorldCardUI mainCard;       // 중앙 메인 카드
@@ -25,6 +26,7 @@ public class WorldSelectManager : MonoBehaviour
     [SerializeField] private WorldCardUI nextPeekCard;   // 오른쪽 peek
     [SerializeField] private TextMeshProUGUI totalProgress;
     [SerializeField] private Button enterButton;
+    [SerializeField] private Button titleButton;
     [SerializeField] private Button prevButton;
     [SerializeField] private Button nextButton;
     [SerializeField] private RectTransform dotsContainer;   // 하단 도트 인디케이터
@@ -71,6 +73,7 @@ public class WorldSelectManager : MonoBehaviour
     void Start()
     {
         if (backButton != null) backButton.onClick.AddListener(ShowWorldSelect);
+        if (titleButton != null) titleButton.onClick.AddListener(MoveToTitle);
         if (prevButton != null) prevButton.onClick.AddListener(PrevWorld);
         if (nextButton != null) nextButton.onClick.AddListener(NextWorld); 
         if (enterButton != null) enterButton.onClick.AddListener(OpenCurrentWorld);
@@ -502,5 +505,14 @@ public class WorldSelectManager : MonoBehaviour
         worldPanelRT.anchoredPosition = Vector2.zero;
         selectedWorld = null;
         isTransitioning = false;
+    }
+
+    public void MoveToTitle()
+    {
+        FadeManager.Instance.FadeAndLoadScene(
+            sceneName: titleSceneName,
+            fadeOutDuration: fadeOutDuration,
+            fadeInDuration: fadeInDuration
+        );
     }
 }
