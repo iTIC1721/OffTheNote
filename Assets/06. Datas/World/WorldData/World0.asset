@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorldData
   worldId: world_00
   displayName: World 0
-  displayDesc: World 0 Desc
-  displayShortDesc: Desc
+  displayDesc: "\uAC8C\uC784\uC758 \uAE30\uBCF8 \uB85C\uC9C1\uC5D0 \uB300\uD574 \uBC30\uC6C1\uB2C8\uB2E4."
+  displayShortDesc: "\uCCAB \uC2DC\uC791"
   displayIcon: {fileID: 21300000, guid: 9234405fc4a7b63498647d75679c62ca, type: 3}
+  bgm: world0
   stageFiles:
   - world_00/move_00.json
   - world_00/move_01.json
