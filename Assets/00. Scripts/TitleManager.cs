@@ -1,3 +1,4 @@
+using UnityEditor.Toolbars;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,5 +21,15 @@ public class TitleManager : MonoBehaviour
             fadeOutDuration: fadeOutDuration,
             fadeInDuration: fadeInDuration
         );
+    }
+
+    public void ShowSettingPanel()
+    {
+        // TODO: 설정 패널 만들기
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
