@@ -1371,8 +1371,11 @@ MonoBehaviour:
   maxSpeed: 30
   mapPiecePadding: 1
   color: {r: 1, g: 1, b: 1, a: 1}
-  movableSprite: {fileID: 21300000, guid: 0a1a8ffeeee597a4ebea028371979253, type: 3}
-  immovableSprite: {fileID: 21300000, guid: 0a1a8ffeeee597a4ebea028371979253, type: 3}
+  mapPieceSprite: {fileID: 21300000, guid: e6eac97baa0203540ba3ec09edf8f63c, type: 3}
+  fixedColor: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 1}
+  movableColor: {r: 1, g: 0.9411765, b: 0.73333335, a: 1}
+  pinnedColor: {r: 1, g: 0.827451, b: 0.8980392, a: 1}
+  flippableColor: {r: 0.8745098, g: 1, b: 0.69411767, a: 1}
 --- !u!114 &1403431212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1399,6 +1402,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseManager
   pausePanel: {fileID: 976031322}
+  selectSceneName: StageSelect
+  fadeOutDuration: 0.75
+  fadeInDuration: 1
 --- !u!1 &1695611306
 GameObject:
   m_ObjectHideFlags: 0

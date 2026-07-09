@@ -22,10 +22,6 @@ public class MapPiece : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private bool isMovable = true;
 
-    [Header("Immovable")]
-    [SerializeField] private Color movableColor = new Color(1f, 1f, 1f, 1f);
-    [SerializeField] private Color immovableColor = new Color(0.75f, 0.75f, 0.75f, 1f);
-
     [Header("Pin")]
     [SerializeField] private bool isPinned = false;
     [SerializeField] private Vector2 pinLocalPosition = Vector2.zero;
@@ -155,7 +151,7 @@ public class MapPiece : MonoBehaviour
     private void Start()
     {
         RefreshColor();
-        sr.sprite = isMovable ? MapPieceManager.Instance.movableSprite : MapPieceManager.Instance.immovableSprite;
+        sr.sprite = MapPieceManager.Instance.mapPieceSprite;
         sr.size = pieceArea.size + Vector2.one * MapPieceManager.Instance.mapPiecePadding;
 
         // sortingOrder는 MapPieceManager.Start()에서 RefreshSortingOrders()로 일괄 할당된다.
@@ -795,12 +791,24 @@ public class MapPiece : MonoBehaviour
     }
 
     /// <summary>
-    /// isMovable 상태에 따라 SpriteRenderer 색상을 갱신한다.
-    /// movable이면 MapPieceManager.color, immovable이면 immovableColor를 적용한다.
+    /// isMovable 상태에 따라 SpriteRenderer 색상을 갱신
     /// </summary>
     void RefreshColor()
     {
-        sr.color = MapPieceManager.Instance.color * (!IsFixed ? movableColor : immovableColor);
+        var mgr = MapPieceManager.Instance;
+        if (mgr == null) return;
+
+        Color stateColor;
+        if (isPinned)
+            stateColor = mgr.pinnedColor;
+        else if (isFlippable)
+            stateColor = mgr.flippableColor;
+        else if (isMovable)
+            stateColor = mgr.movableColor;
+        else
+            stateColor = mgr.fixedColor;
+
+        sr.color = mgr.color * stateColor;
     }
 
     //void SetupImmovableObject()
@@ -836,6 +844,8 @@ public class MapPiece : MonoBehaviour
             pinMarker = Instantiate(pinMarkerPrefab, transform);
             pinMarker.transform.localPosition = pinLocal;
         }
+
+        if (sr != null) RefreshColor();
     }
 
     public void SetupFlip(bool flippable, FlipAxis axis, bool startFlipped = false)
@@ -857,6 +867,8 @@ public class MapPiece : MonoBehaviour
             isFlipped = false;
             ApplyFlip();
         }
+
+        if (sr != null) RefreshColor();
     }
 
     void SetupFlipMarker()

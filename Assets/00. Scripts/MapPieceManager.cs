@@ -17,9 +17,14 @@ public class MapPieceManager : MonoBehaviour
     public float mapPiecePadding = 0.3f;
 
     [Header("BG")]
-    public Color color;
-    public Sprite movableSprite;
-    public Sprite immovableSprite;
+    public Color color = Color.white; // 전체 톤에 곱해지는 베이스 색상
+    public Sprite mapPieceSprite; // 모든 MapPiece가 공용으로 사용하는 단일 스프라이트
+
+    [Header("Piece State Colors")]
+    public Color fixedColor = new Color(0.75f, 0.75f, 0.75f, 1f);
+    public Color movableColor = new Color(1f, 1f, 1f, 1f);
+    public Color pinnedColor = new Color(1f, 0.85f, 0.4f, 1f);
+    public Color flippableColor = new Color(0.6f, 0.85f, 1f, 1f);
 
     public MapPiece CurrentPiece => currentPiece;
     public PlayerController GetPlayer() => player;
