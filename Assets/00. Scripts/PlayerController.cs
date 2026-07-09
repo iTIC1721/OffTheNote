@@ -119,14 +119,14 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            AudioManager.Instance.PlaySFX("jump");
-
             if (coyoteTimer > 0f)
                 jumpQueued = true;
             else if (!isGrounded && hasDoubleJump && !doubleJumpUsed)
             {
                 velocity.y = jumpForce;
                 doubleJumpUsed = true;
+
+                AudioManager.Instance.PlaySFX("jump");
             }
         }
     }
@@ -182,6 +182,8 @@ public class PlayerController : MonoBehaviour
             {
                 velocity.y = jumpForce;
                 coyoteTimer = 0f;
+
+                AudioManager.Instance.PlaySFX("jump");
             }
             jumpQueued = false; // 착지 여부와 무관하게 소비
         }
