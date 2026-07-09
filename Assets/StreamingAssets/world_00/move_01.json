@@ -22,8 +22,16 @@
                 "x": 16.0,
                 "y": 6.0
             },
-            "isMovable": true,
+            "isMovable": false,
             "isVisible": true,
+            "isPinned": false,
+            "pinLocalPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "isFlippable": false,
+            "flipAxis": "Y",
+            "startFlipped": false,
             "pieceObjects": [
                 {
                     "id": "Platform_0",
@@ -61,6 +69,15 @@
                             "x": 3.0,
                             "y": 0.5
                         }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 0
                     }
                 },
                 {
@@ -99,6 +116,15 @@
                             "x": 3.0,
                             "y": 0.5
                         }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 0
                     }
                 }
             ]

@@ -34,14 +34,14 @@ public class PinMarkerAlpha : MonoBehaviour
     public float smoothSpeed = 8f;
 
     // ── 내부 ──────────────────────────────────────────────────────
-    private SpriteRenderer sr;
+    private SpriteRenderer[] srs;
     private MapPiece ownerPiece;       // 이 핀을 소유한 MapPiece
     private SpriteRenderer ownerSr;    // ownerPiece의 SpriteRenderer
     private float currentAlpha;
 
     void Awake()
     {
-        sr = GetComponent<SpriteRenderer>();
+        srs = GetComponentsInChildren<SpriteRenderer>();
         currentAlpha = maxAlpha;
     }
 
@@ -60,9 +60,12 @@ public class PinMarkerAlpha : MonoBehaviour
 
         currentAlpha = Mathf.Lerp(currentAlpha, targetAlpha, Time.deltaTime * smoothSpeed);
 
-        Color c = sr.color;
-        c.a = currentAlpha;
-        sr.color = c;
+        foreach (var sr in srs)
+        {
+            Color c = sr.color;
+            c.a = currentAlpha;
+            sr.color = c;
+        }        
     }
 
     /// <summary>

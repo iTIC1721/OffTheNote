@@ -24,6 +24,14 @@
             },
             "isMovable": true,
             "isVisible": true,
+            "isPinned": false,
+            "pinLocalPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "isFlippable": false,
+            "flipAxis": "Y",
+            "startFlipped": false,
             "pieceObjects": [
                 {
                     "id": "Platform_0",
@@ -61,6 +69,15 @@
                             "x": 3.0,
                             "y": 0.5
                         }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 0
                     }
                 }
             ]
@@ -77,6 +94,14 @@
             },
             "isMovable": true,
             "isVisible": true,
+            "isPinned": false,
+            "pinLocalPosition": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "isFlippable": false,
+            "flipAxis": "Y",
+            "startFlipped": false,
             "pieceObjects": []
         }
     ],
@@ -89,7 +114,7 @@
                 "y": 4.5
             },
             "text": {
-                "content": "쪽지를 드래그해 움직일 수 있습니다.",
+                "content": "노란 쪽지는 드래그해서 움직일 수 있습니다.",
                 "fontSize": 10.0
             },
             "hazard": {
