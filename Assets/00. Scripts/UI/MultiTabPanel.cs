@@ -17,7 +17,7 @@ public class MultiTabPanel : MonoBehaviour
 
     private int currentIndex = 0;
 
-    private void Start()
+    private void Awake()
     {
         Initialize();
     }

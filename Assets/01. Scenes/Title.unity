@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 62006038}
   - component: {fileID: 62006037}
   - component: {fileID: 62006036}
+  - component: {fileID: 62006039}
   m_Layer: 5
   m_Name: ResetButton
   m_TagString: Untagged
@@ -330,6 +331,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62006034}
   m_CullTransparentMesh: 1
+--- !u!114 &62006039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62006034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a724c14c9256b9438b344a16e8204ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  clickSfxName: click
+  volumeScale: 0.5
 --- !u!1 &65912452
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,6 +811,7 @@ GameObject:
   - component: {fileID: 154881622}
   - component: {fileID: 154881621}
   - component: {fileID: 154881620}
+  - component: {fileID: 154881623}
   m_Layer: 5
   m_Name: ApplyButton
   m_TagString: Untagged
@@ -905,6 +921,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154881618}
   m_CullTransparentMesh: 1
+--- !u!114 &154881623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154881618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a724c14c9256b9438b344a16e8204ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  clickSfxName: click
+  volumeScale: 0.5
 --- !u!1 &157659488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,11 +1877,11 @@ MonoBehaviour:
   m_Content: {fileID: 1548356527}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 5
   m_Viewport: {fileID: 19343969}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 265166483}
@@ -4871,7 +4901,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1307778000}
+      - m_Target: {fileID: 1158512973}
         m_TargetAssemblyTypeName: MultiTabPanel, Assembly-CSharp
         m_MethodName: EnablePanel
         m_Mode: 1
@@ -4921,6 +4951,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1154762272}
   m_CullTransparentMesh: 1
+--- !u!1 &1158512972
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1158512974}
+  - component: {fileID: 1158512973}
+  m_Layer: 0
+  m_Name: MultiTabPanelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1158512973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158512972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ec13b3dea89ac47b2a121a9dc8ac2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MultiTabPanel
+  mainPanel: {fileID: 1307777996}
+  exitButton: {fileID: 1272344244}
+  tabs:
+  - tabButton: {fileID: 1335085341}
+    panel: {fileID: 1707746434}
+  - tabButton: {fileID: 935941917}
+    panel: {fileID: 1693179060}
+--- !u!4 &1158512974
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158512972}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1161848196
 GameObject:
   m_ObjectHideFlags: 0
@@ -5431,7 +5512,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1307777997}
   - component: {fileID: 1307777999}
-  - component: {fileID: 1307778000}
   m_Layer: 5
   m_Name: SettingPanel
   m_TagString: Untagged
@@ -5468,25 +5548,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1307777996}
   m_CullTransparentMesh: 1
---- !u!114 &1307778000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1307777996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8ec13b3dea89ac47b2a121a9dc8ac2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MultiTabPanel
-  mainPanel: {fileID: 1307777996}
-  exitButton: {fileID: 1272344244}
-  tabs:
-  - tabButton: {fileID: 1335085341}
-    panel: {fileID: 1707746434}
-  - tabButton: {fileID: 935941917}
-    panel: {fileID: 1693179060}
 --- !u!1 &1335085339
 GameObject:
   m_ObjectHideFlags: 0
@@ -7295,7 +7356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1707746435
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7633,6 +7694,7 @@ GameObject:
   - component: {fileID: 1763922893}
   - component: {fileID: 1763922892}
   - component: {fileID: 1763922891}
+  - component: {fileID: 1763922894}
   m_Layer: 5
   m_Name: ApplyButton
   m_TagString: Untagged
@@ -7742,6 +7804,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1763922889}
   m_CullTransparentMesh: 1
+--- !u!114 &1763922894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763922889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a724c14c9256b9438b344a16e8204ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  clickSfxName: click
+  volumeScale: 0.5
 --- !u!1 &1803950498
 GameObject:
   m_ObjectHideFlags: 0
@@ -8410,6 +8486,7 @@ GameObject:
   - component: {fileID: 1986354669}
   - component: {fileID: 1986354668}
   - component: {fileID: 1986354667}
+  - component: {fileID: 1986354670}
   m_Layer: 5
   m_Name: ResetButton
   m_TagString: Untagged
@@ -8519,6 +8596,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986354665}
   m_CullTransparentMesh: 1
+--- !u!114 &1986354670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986354665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a724c14c9256b9438b344a16e8204ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
+  clickSfxName: click
+  volumeScale: 0.5
 --- !u!1 &1991004678
 GameObject:
   m_ObjectHideFlags: 0
@@ -8770,3 +8861,4 @@ SceneRoots:
   - {fileID: 869726475}
   - {fileID: 272402389}
   - {fileID: 129398091}
+  - {fileID: 1158512974}
