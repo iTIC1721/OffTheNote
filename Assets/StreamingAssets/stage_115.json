@@ -267,6 +267,53 @@
                     "laserEmitter": {
                         "direction": 0
                     }
+                },
+                {
+                    "id": "LaserEmitter_5",
+                    "type": 6,
+                    "localPosition": {
+                        "x": 2.0,
+                        "y": -4.0
+                    },
+                    "platform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "movingPlatform": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        },
+                        "mode": 0,
+                        "pointA": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pointB": {
+                            "x": 3.0,
+                            "y": 0.0
+                        },
+                        "loopPoints": [],
+                        "speed": 2.0,
+                        "waitTime": 0.0
+                    },
+                    "blocker": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "hazard": {
+                        "size": {
+                            "x": 3.0,
+                            "y": 0.5
+                        }
+                    },
+                    "laserEmitter": {
+                        "direction": 0
+                    }
                 }
             ]
         },
