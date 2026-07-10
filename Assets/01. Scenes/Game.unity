@@ -1373,7 +1373,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 1}
   mapPieceSprite: {fileID: 21300000, guid: e6eac97baa0203540ba3ec09edf8f63c, type: 3}
   fixedColor: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 1}
-  movableColor: {r: 1, g: 0.9411765, b: 0.73333335, a: 1}
+  movableColor: {r: 1, g: 0.9155168, b: 0.6462264, a: 1}
   pinnedColor: {r: 1, g: 0.827451, b: 0.8980392, a: 1}
   flippableColor: {r: 0.8745098, g: 1, b: 0.69411767, a: 1}
 --- !u!114 &1403431212

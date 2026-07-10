@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.79917973, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.6958339, b: 0.0141509175, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -107,4 +107,6 @@ MonoBehaviour:
   suckDuration: 1.2
   suckScale: 0.05
   waitAfter: 0.3
+  fadeOutDuration: 0.4
+  fadeInDuration: 0.5
   selectSceneName: StageSelect
