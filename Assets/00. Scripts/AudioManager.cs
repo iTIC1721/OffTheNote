@@ -131,6 +131,16 @@ public class AudioManager : MonoBehaviour
             SaveSettings();
         }
     }
+
+    // ── Defaults (설정 UI 초기화 버튼용) ───────────────────────────────────
+    /// <summary>인스펙터에 설정된 마스터 볼륨 기본값</summary>
+    public float DefaultMasterVolume => defaultMasterVolume;
+
+    /// <summary>인스펙터에 설정된 BGM 볼륨 기본값</summary>
+    public float DefaultBGMVolume => defaultBGMVolume;
+
+    /// <summary>인스펙터에 설정된 SFX 볼륨 기본값</summary>
+    public float DefaultSFXVolume => defaultSFXVolume;
     #endregion
 
     #region Initialization

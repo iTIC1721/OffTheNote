@@ -21,11 +21,6 @@ public class TitleManager : MonoBehaviour
         );
     }
 
-    public void ShowSettingPanel()
-    {
-        // TODO: 설정 패널 만들기
-    }
-
     public void QuitGame()
     {
         Application.Quit();
